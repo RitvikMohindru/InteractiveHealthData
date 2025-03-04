@@ -1,0 +1,33 @@
+#radar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+#slider {
+    width: 60%;
+    height: 8px;
+    margin-left: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    /* Remove default styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+#slider::-webkit-slider-runnable-track {
+    background: #197e7882;
+    height: 8px;
+    border-radius: 5px;
+  }
+  
+#slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #215855;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -6px;
+  }
