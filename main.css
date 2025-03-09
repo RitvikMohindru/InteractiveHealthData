@@ -17,6 +17,22 @@ p {
   text-indent: 40px;
 }
 
+svg {
+  padding: 5px;
+  margin: 5px;
+}
+
+select {
+  padding: 2px;
+  margin: 5px;
+}
+
+#bvp-grouping {
+  display: flex;
+  position: relative;
+  left: 100px;
+}
+
 #radar-container {
   display: flex;
   flex-direction: column;
@@ -36,7 +52,7 @@ p {
 }
 
 #slider::-webkit-slider-runnable-track {
-  background: #197e7882;
+  background: #A9A9A9;
   height: 8px;
   border-radius: 5px;
 }
@@ -45,7 +61,7 @@ p {
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  background: #215855;
+  background: #636363;
   border-radius: 50%;
   cursor: pointer;
   margin-top: -6px;

@@ -6,7 +6,7 @@ let non_gamified_data = []; // Global variable to store the non-gamified data
 async function loadData() {
   // Load the gamified data
   gamified_data = await d3.csv(
-    "./radar_data/gamified_stats_by_second.csv",
+    "./data/radar_data/gamified_stats_by_second.csv",
     (d) => {
       d.time_elapsed = parseFloat(d.time_elapsed);
       d.bvp = parseFloat(d.bvp);
@@ -15,11 +15,10 @@ async function loadData() {
       return d;
     }
   );
-  console.log("Loaded Gamified Data:", gamified_data);
 
   // Load the non-gamified data
   non_gamified_data = await d3.csv(
-    "./radar_data/non_gamified_stats_by_second.csv",
+    "./data/radar_data/non_gamified_stats_by_second.csv",
     (d) => {
       d.time_elapsed = parseFloat(d.time_elapsed);
       d.bvp = parseFloat(d.bvp);
@@ -28,7 +27,6 @@ async function loadData() {
       return d;
     }
   );
-  console.log("Loaded Non-Gamified Data:", non_gamified_data);
 }
 
 const width = 500;
@@ -113,23 +111,6 @@ async function drawRadarChart() {
     .x((d) => d.x)
     .y((d) => d.y);
 
-  // draw the path element for non gamified data
-  svg
-    .selectAll(".non-gamified-path")
-    .data([non_gamified_data[0]])
-    .join((enter) =>
-      enter
-        .append("path")
-        .attr("class", "non-gamified-path")
-        .datum((d) => getPathCoordinates(d))
-        .attr("d", line)
-        .attr("stroke-width", 3)
-        .attr("stroke", "gray")
-        .attr("fill", "gray")
-        .attr("stroke-opacity", 1)
-        .attr("opacity", 0.5)
-    );
-
   // draw the path element for gamified data
   svg
     .selectAll(".gamified-path")
@@ -144,7 +125,24 @@ async function drawRadarChart() {
         .attr("stroke", "darkorange")
         .attr("fill", "darkorange")
         .attr("stroke-opacity", 1)
-        .attr("opacity", 0.5)
+        .attr("opacity", 0.6)
+    );
+
+  // draw the path element for non gamified data
+  svg
+    .selectAll(".non-gamified-path")
+    .data([non_gamified_data[0]])
+    .join((enter) =>
+      enter
+        .append("path")
+        .attr("class", "non-gamified-path")
+        .datum((d) => getPathCoordinates(d))
+        .attr("d", line)
+        .attr("stroke-width", 3)
+        .attr("stroke", "gray")
+        .attr("fill", "gray")
+        .attr("stroke-opacity", 1)
+        .attr("opacity", 0.7)
     );
 
   // Add legend
@@ -208,14 +206,14 @@ async function drawRadarChart() {
       .selectAll(".gamified-path")
       .datum(gamifiedDataPoint)
       .transition()
-      .duration(100)
+      .duration(50)
       .attr("d", line(getPathCoordinates(gamifiedDataPoint)));
 
     svg
       .selectAll(".non-gamified-path")
       .datum(nonGamifiedDataPoint)
       .transition()
-      .duration(100)
+      .duration(50)
       .attr("d", line(getPathCoordinates(nonGamifiedDataPoint)));
   }
 }
