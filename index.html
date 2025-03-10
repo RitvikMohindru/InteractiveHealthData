@@ -8,16 +8,17 @@
     <script type="module" src="radar.js"></script>
     <script type="module" src="bvp_line.js"></script>
     <script type="module" src="bvp_variance_line.js"></script>
+    <script type="module" src="swarm.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
   <body>
-    <h1>Brain Strain: The Impact of Mental Tasks on Physical Reactions</h1>
+    <h1>Brain Strain: How Cognitive Tasks Impact Physical Reactions</h1>
 
     <h2>Introduction: Understanding Cognitive Load and Gamification</h2>
     <h2>Baseline vs. Cognitive Load: A Tale of Physiological Responses</h2>
     <p>
-      Viz 1: Use line graphs to show comparison of signals like BVP, EDA, and
-      temperature during baseline vs. cog load.
+      Viz 1: Use line graphs to show comparison of Blood Volume Pulse (BVP)
+      during baseline vs. cog load.
     </p>
     <div id="line-container">
       <svg id="bvp-line-chart" width="875" height="400"></svg>
@@ -45,16 +46,14 @@
     </div>
     <h2>Physiological Reactions Comparison</h2>
     <h3>
-      Visualizing Physiological Responses Under At Rest vs. Under Cognitive Load
+      Visualizing Physiological Responses Under Different Types of Cognitive Load
     </h3>
     <p>
-      Viz 2: Side-by-side bar chart comparing BVP or EDA or Temp during gamified
-      vs. non-gamified survey sessions. OR include line graphs to show
-      fluctuations in response time or survey completion time (aka time spent
-      per question or entire survey).
+      Viz 2: Side-by-side swarm chart comparing Electrodermal Activity (EDA) and Temperature during gamified
+      vs. non-gamified survey sessions.
     </p>
     <div id="swarm-container">
-      <svg id="swarm-chart" width="875" height="400"></svg>
+      <svg id="swarm-chart" width="750" height="400"></svg>
     </div>
 
     <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>

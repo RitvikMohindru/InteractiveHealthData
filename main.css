@@ -46,6 +46,12 @@ select {
   align-items: center;
 }
 
+#swarm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #slider {
   width: 60%;
   height: 8px;
