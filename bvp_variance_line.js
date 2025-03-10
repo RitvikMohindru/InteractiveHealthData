@@ -21,13 +21,13 @@ function updateChart(data) {
     const baselineData = data.filter((d) => d.baseline_cog === "baseline");
     const cogData = data.filter((d) => d.baseline_cog === "cog");
 
-    const svg = d3.select("#bvp-line-chart");
+    const svg = d3.select("#bvp-variance-line-chart");
     svg.selectAll("*").remove();
 
     const xScale = d3.scaleLinear().domain([0, 120]).range([0, width]);
     const yScale = d3
       .scaleLinear()
-      .domain([-100, 70]) //.domain([d3.min(data, (d) => d.bvp) - 0.5, d3.max(data, (d) => d.bvp) + 10])
+      .domain([d3.min(data, (d) => d.bvp) - 0.5, d3.max(data, (d) => d.bvp) + 10])
       .range([300, 0]);
 
     const lineBaseline = d3
@@ -91,11 +91,11 @@ function updateChart(data) {
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -height / 2)
-      .attr("y", -50)
+      .attr("y", -60)
       .attr("text-anchor", "middle")
       .style("font-family", "'Merriweather'")
       .style("font-size", "16px")
-      .text("Average Blood Volume Pulse");
+      .text("Variance in Blood Volume Pulse");
     
     svg
       .append("text")
@@ -105,7 +105,17 @@ function updateChart(data) {
       .style("font-family", "'Merriweather'")
       .style("font-size", "24px")
       .style("font-weight", "bolder")
-      .text("How Does Cognitive Load Affect Blood Volume Pulse?");
+      .text("How Does the Variance of BVP Differ When the Brain is at Rest");
+    
+      svg
+      .append("text")
+      .attr("x", svgWidth / 1.9)
+      .attr("y", height - 227)
+      .attr("text-anchor", "middle")
+      .style("font-family", "'Merriweather'")
+      .style("font-size", "24px")
+      .style("font-weight", "bolder")
+      .text("Compared to When the Brain is Under Cognitive Load?");
     
     const legend = svg.append("g").attr("transform", "translate(800, 90)");
 
@@ -209,7 +219,7 @@ function updateChart(data) {
                 .style("visibility", "visible");
 
             tooltip
-                .html(`Seconds Elapsed: ${closestTime}<br>Baseline BVP: ${closestBaseline.bvp.toFixed(2)}<br>Cognitive Load BVP: ${closestCog.bvp.toFixed(2)}`)
+                .html(`Seconds Elapsed: ${closestTime}<br>Baseline Var: ${closestBaseline.bvp.toFixed(2)}<br>Cognitive Load Var: ${closestCog.bvp.toFixed(2)}`)
                 .style("left", `${event.pageX + 10}px`)
                 .style("top", `${event.pageY - 28}px`)
                 .style("visibility", "visible");
@@ -221,17 +231,17 @@ function updateChart(data) {
 }
 
 async function main() {
-    const dropdown = document.querySelector("#bvp-grouping select");
+    const dropdown = document.querySelector("#bvp-variance-grouping select");
 
     async function handleDropdownChange() {
         const grouping = dropdown.value;
         let file;
-        if (grouping === "half_second") {
-            file = "./data/bvp_line_data/mean_bvp_by_half_second.csv";
-        } else if (grouping === "tenth_second") {
-            file = "./data/bvp_line_data/mean_bvp_by_tenth_second.csv";
-        } else if (grouping === "second") {
-            file = "./data/bvp_line_data/mean_bvp_by_second.csv";
+        if (grouping === "half_second_var") {
+            file = "./data/bvp_variance_line_data/bvp_var_by_half_second.csv";
+        } else if (grouping === "tenth_second_var") {
+            file = "./data/bvp_variance_line_data/bvp_var_by_tenth_second.csv";
+        } else if (grouping === "second_var") {
+            file = "./data/bvp_variance_line_data/bvp_var_by_second.csv";
         }
     const data = await loadData(file);
     updateChart(data);

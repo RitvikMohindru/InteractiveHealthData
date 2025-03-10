@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="main.css" />
     <script type="module" src="radar.js"></script>
     <script type="module" src="bvp_line.js"></script>
+    <script type="module" src="bvp_variance_line.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
   <body>
@@ -24,8 +25,21 @@
         Group Data By:
         <select> 
           <option value="tenth_second"> Tenth Seconds </option>
-          <option value="half_second"> Half Seconds </option>
+          <option value="half_second" selected> Half Seconds </option>
           <option value="second"> Seconds </option>
+        </select>
+      </label>
+    </div>
+    <br>
+    <br>
+    <div id="variance-line-container">
+      <svg id="bvp-variance-line-chart" width="875" height="400"></svg>
+      <label id="bvp-variance-grouping">
+        Group Data By:
+        <select> 
+          <option value="tenth_second_var"> Tenth Seconds </option>
+          <option value="half_second_var" selected> Half Seconds </option>
+          <option value="second_var"> Seconds </option>
         </select>
       </label>
     </div>
@@ -39,6 +53,9 @@
       fluctuations in response time or survey completion time (aka time spent
       per question or entire survey).
     </p>
+    <div id="swarm-container">
+      <svg id="swarm-chart" width="875" height="400"></svg>
+    </div>
 
     <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>
 
