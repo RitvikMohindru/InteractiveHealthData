@@ -9,60 +9,78 @@
     <script type="module" src="bvp_line.js"></script>
     <script type="module" src="bvp_variance_line.js"></script>
     <script type="module" src="swarm.js"></script>
+    <script type="module" src="stroop.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <h1>Brain Strain: How Cognitive Tasks Impact Physical Reactions</h1>
 
     <h2>Introduction: Understanding Cognitive Load and Gamification</h2>
+    <!-- Stroop Test -->
+    <h2>Stroop Test: Measuring Cognitive Interference</h2>
+    <div id="stroop-game-container">
+      <div id="stroop-game-header">
+        <p id="stroop-instruction">
+          Press the key corresponding to the <strong>ink color</strong> of the
+          word:
+          <br />
+          <strong class="red">r</strong> for Red,
+          <strong class="green">g</strong> for Green,
+          <strong class="blue">b</strong> for Blue,
+          <strong class="yellow">y</strong> for Yellow
+        </p>
+        <div id="stroop-game-stats">
+          <p>Score: <span id="stroop-score">0</span></p>
+          <p>Time Left: <span id="stroop-timer">20</span>s</p>
+        </div>
+      </div>
+      <div id="stroop-word-display"></div>
+      <p id="stroop-feedback"></p>
+      <button id="stroop-start-button">Start Game</button>
+      <button id="stroop-reset-button">Reset Game</button>
+    </div>
+    <br />
     <h2>Baseline vs. Cognitive Load: A Tale of Physiological Responses</h2>
-    <p>
-      Viz 1: Use line graphs to show comparison of Blood Volume Pulse (BVP)
-      during baseline vs. cog load.
-    </p>
     <div id="line-container">
       <svg id="bvp-line-chart" width="875" height="400"></svg>
       <label id="bvp-grouping">
         Group Data By:
-        <select> 
-          <option value="tenth_second"> Tenth Seconds </option>
-          <option value="half_second" selected> Half Seconds </option>
-          <option value="second"> Seconds </option>
+        <select>
+          <option value="tenth_second">Tenth Seconds</option>
+          <option value="half_second" selected>Half Seconds</option>
+          <option value="second">Seconds</option>
         </select>
       </label>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
     <div id="variance-line-container">
       <svg id="bvp-variance-line-chart" width="875" height="400"></svg>
       <label id="bvp-variance-grouping">
         Group Data By:
-        <select> 
-          <option value="tenth_second_var"> Tenth Seconds </option>
-          <option value="half_second_var" selected> Half Seconds </option>
-          <option value="second_var"> Seconds </option>
+        <select>
+          <option value="tenth_second_var">Tenth Seconds</option>
+          <option value="half_second_var" selected>Half Seconds</option>
+          <option value="second_var">Seconds</option>
         </select>
       </label>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
     <h2>Physiological Reactions Comparison</h2>
     <h3>
-      Visualizing Physiological Responses Under Different Types of Cognitive Load
+      Visualizing Physiological Responses Under Different Types of Cognitive
+      Load
     </h3>
-    <p>
-      Viz 2: Side-by-side swarm chart comparing Electrodermal Activity (EDA) and Temperature during gamified
-      vs. non-gamified survey sessions.
-    </p>
     <div id="swarm-container">
       <svg id="swarm-chart" width="750" height="400"></svg>
     </div>
-
+    <br />
+    <br />
     <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>
 
     <h2 id="radar-chart-title">Gamification and Physiological Response</h2>
@@ -71,7 +89,8 @@
       <input id="slider" type="range" min="1" max="360" value="0" step="0.1" />
       <p>Seconds Elapsed: <output id="sec-num"></output></p>
     </div>
-
+    <br />
+    <br />
     <h2>Writeup</h2>
     <h4>What have we done so far?</h4>
     <p>
