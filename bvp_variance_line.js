@@ -27,7 +27,7 @@ function updateChart(data) {
     const xScale = d3.scaleLinear().domain([0, 120]).range([0, width]);
     const yScale = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.bvp) + 5])
+      .domain([0, d3.max(data, (d) => d.bvp) + 500])
       .range([300, 0]);
 
     const lineBaseline = d3

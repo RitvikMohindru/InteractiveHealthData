@@ -34,6 +34,10 @@ select {
   align-items: center;
 }
 
+#radar-chart-title {
+  text-align: center;
+}
+
 #line-container {
   display: flex;
   flex-direction: column;
