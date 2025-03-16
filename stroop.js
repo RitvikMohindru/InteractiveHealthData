@@ -66,6 +66,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function resetGame() {
+    score = 0;
+    timeLeft = 20;
+    currentColor = "";
+    currentWord = "";
+
+    scoreDisplay.textContent = score;
+    timerDisplay.textContent = timeLeft;
+    wordDisplay.textContent = "";
+    feedback.textContent = "";
+
+    startButton.style.display = "block";
+    startButton.textContent = "Start Game";
+    resetButton.style.display = "none";
+
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    document.removeEventListener("keydown", handleKeyPress);
+  }
+
   function startGame() {
     score = 0;
     timeLeft = 20;
@@ -110,9 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
     feedback.style.display = "none";
   }
 
-  resetButton.addEventListener("click", function () {
-    startGame();
-  });
-
+  resetButton.addEventListener("click", resetGame);
   startButton.addEventListener("click", startGame);
 });
