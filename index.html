@@ -51,6 +51,14 @@
 
     <h2>Baseline vs. Cognitive Load: A Tale of Physiological Responses</h2>
     <div id="line-container">
+      <label id="choose-graph">
+        Choose Physiological Response to View:
+      <select>
+        <option value="Blood Volume Pulse (BVP)" selected>Blood Volume Pulse (BVP)</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+      </label>
+      <div id="bvp-line">
       <svg id="bvp-line-chart" width="875" height="400"></svg>
       <label id="bvp-grouping">
         Group Data By:
@@ -60,6 +68,7 @@
           <option value="second">Seconds</option>
         </select>
       </label>
+      </div>
     </div>
     <br />
     <br />
