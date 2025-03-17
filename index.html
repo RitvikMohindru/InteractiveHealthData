@@ -17,107 +17,317 @@
     />
   </head>
   <body>
-    <canvas id="animationCanvas"></canvas>
-    <script src="intro.js"></script>
+    <section id="scrolly">
+      <canvas id="animationCanvas"></canvas>
+      <script src="intro.js"></script>
+      <div id="title">
+        Brain Strain: How Cognitive Tasks Impact Physical Reactions
+      </div>
 
-    <h1 id="title">
-      Brain Strain: How Cognitive Tasks Impact Physical Reactions
-    </h1>
-    <p>
-      The human brain is a remarkable machine, capable of processing vast
-      amounts of information in a fraction of a second. However, when faced with
-      cognitive challenges—such as solving complex puzzles or multitasking—our
-      bodies react in fascinating and often surprising ways. But how exactly
-      does this happen? And what role does gamification play in shaping these
-      responses?
-    </p>
-
-    <h2>Introduction: Understanding Cognitive Load and Gamification</h2>
-    <!-- Stroop Test -->
-    <h2>Stroop Test: Measuring Cognitive Interference</h2>
-    <div id="stroop-game-container">
-      <div id="stroop-game-header">
-        <p id="stroop-instruction">
-          Press the key corresponding to the <strong>ink color</strong> of the
-          word:
-          <br />
-          <strong class="red">r</strong> for Red,
-          <strong class="green">g</strong> for Green,
-          <strong class="blue">b</strong> for Blue,
-          <strong class="yellow">y</strong> for Yellow
-        </p>
-        <div id="stroop-game-stats">
-          <p id="score">Score: <span id="stroop-score">0</span></p>
-          <p id="response-time">
-            Response Time: <span id="stroop-response-time">0</span>
+      <article>
+        <div class="step" data-step="1">
+          <p class="hook-text">
+            The human brain is a remarkable machine, capable of processing vast
+            amounts of information in the blink of an eye. Yet, when faced with
+            cognitive challenges, our bodies react in fascinating and often
+            surprising ways.
+            <!-- Heart rates increase, blood flow shifts, and even
+            subtle changes in temperature occur. These physiological responses
+            are the body's way of signaling that the brain is hard at work. -->
           </p>
         </div>
-      </div>
-      <div id="stroop-word-display"></div>
-      <p id="stroop-feedback"></p>
-      <button id="stroop-start-button">Start Game</button>
-      <button id="stroop-reset-button">Reset Game</button>
-    </div>
-    <br />
-    <div id="similarity-display"></div>
 
-    <h2>Baseline vs. Cognitive Load: A Tale of Physiological Responses</h2>
-    <div id="line-container">
-      <label id="choose-graph">
-        Choose Physiological Response to View:
-        <select>
-          <option value="Blood Volume Pulse (BVP)" selected>
-            Blood Volume Pulse (BVP)
-          </option>
-          <option value="Temperature">Temperature</option>
-        </select>
-      </label>
-      <div id="bvp-line">
-        <svg id="bvp-line-chart" width="875" height="400"></svg>
-        <label id="bvp-grouping">
-          Group Data By:
-          <select id="bvp-grouping-select">
-            <option value="tenth_second">Tenth Seconds</option>
-            <option value="half_second" selected>Half Seconds</option>
-            <option value="second">Seconds</option>
-          </select>
-        </label>
-      </div>
-    </div>
-    <br />
-    <br />
-    <div id="variance-line-container">
-      <svg id="bvp-variance-line-chart" width="875" height="400"></svg>
-      <label id="bvp-variance-grouping">
-        Group Data By:
-        <select>
-          <option value="tenth_second_var">Tenth Seconds</option>
-          <option value="half_second_var" selected>Half Seconds</option>
-          <option value="second_var">Seconds</option>
-        </select>
-      </label>
-    </div>
-    <br />
-    <br />
-    <h2>Physiological Reactions Comparison</h2>
-    <h3>
-      Visualizing Physiological Responses Under Different Types of Cognitive
-      Load
-    </h3>
-    <div id="swarm-container">
-      <svg id="swarm-chart" width="750" height="400"></svg>
-    </div>
-    <br />
-    <br />
-    <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>
+        <div class="step" data-step="2">
+          <p class="hook-text">
+            But how exactly does this happen? And what role does
+            <span class="highlight">gamification</span>
+            play in shaping these responses?
+          </p>
+        </div>
 
-    <h2 id="radar-chart-title">Gamification and Physiological Response</h2>
-    <div id="radar-container">
-      <svg id="radar-chart" width="500" height="500"></svg>
-      <input id="slider" type="range" min="1" max="360" value="0" step="0.1" />
-      <p>Seconds Elapsed: <output id="sec-num"></output></p>
-    </div>
-    <br />
-    <br />
+        <div class="step" data-step="3">
+          <p id="text">
+            The link between mental effort and physical response becomes
+            particularly interesting when we consider how different tasks—such
+            as surveys—can impact cognitive load and the way our bodies react to
+            mental strain.
+          </p>
+          <p id="text">
+            Surveys are key to data collection, but their design can influence
+            how respondents interact with them. Traditional surveys are more
+            formal, requiring focus and creating a sense of seriousness. But
+            gamified surveys use elements like progress bars, rewards, and
+            storytelling to make the experience engaging and enjoyable.
+          </p>
+        </div>
+
+        <div class="step" data-step="4">
+          <p id="img-intro-text">
+            First, take a look at the two surveys below:
+          </p>
+          <div id="survey-images">
+            <img
+              id="survey-img1"
+              src="assets/example_non_gamified.png"
+              alt="Example of a Non-Gamified Survey"
+            />
+            <img
+              id="survey-img2"
+              src="assets/example_gamified.png"
+              alt="Example of a Gamified Survey"
+            />
+          </div>
+          <p id="img-outro-text">
+            Which one do you think requires more cognitive effort?
+          </p>
+        </div>
+        <div class="step" data-step="5">
+          <p id="text">
+            The non-gamified survey, with its serious tone, encourages
+            respondents to invest more cognitive effort in answering carefully.
+            Meanwhile, the gamified survey, featuring playful elements like a
+            progress bar with a little girl walking towards a present, feels
+            more relaxed. One might assume this reduces cognitive effort, but
+            does the playful design actually mask a deeper cognitive demand?
+          </p>
+        </div>
+
+        <div class="step" data-step="6">
+          <p class="stroop-intro-text">
+            To explore how every thought, decision, and action triggers a
+            cascade of physiological responses, consider the Stroop Test. In
+            this classic experiment, participants identify the color of a word
+            while ignoring its meaning. Although simple, it requires significant
+            mental effort, especially when the word and color are conflicting.
+          </p>
+          <p class="stroop-intro-text">
+            Give it a try below! Notice how your brain handles the conflict—this
+            is cognitive load in action!
+          </p>
+        </div>
+        <div class="step" data-step="7">
+          <h2>Stroop Test: Measuring Cognitive Interference</h2>
+          <div id="stroop-game-container">
+            <div id="stroop-game-header">
+              <p id="stroop-instruction">
+                Press the key corresponding to the <strong>ink color</strong> of
+                the word:
+                <br />
+                <strong class="red">r</strong> for Red,
+                <strong class="green">g</strong> for Green,
+                <strong class="blue">b</strong> for Blue,
+                <strong class="yellow">y</strong> for Yellow
+              </p>
+              <div id="stroop-game-stats">
+                <p id="score">Score: <span id="stroop-score">0</span></p>
+                <p id="response-time">
+                  &nbsp;Response Time:
+                  <span id="stroop-response-time">0.00</span>
+                </p>
+              </div>
+            </div>
+            <div id="stroop-word-display"></div>
+            <p id="stroop-feedback"></p>
+            <button id="stroop-start-button">Start Game</button>
+            <button id="stroop-reset-button">Reset Game</button>
+          </div>
+          <br />
+          <div id="similarity-display"></div>
+        </div>
+
+        <div class="step" data-step="8">
+          <p id="text">
+            But how do physiological responses compare to cognitive load when
+            the brain is at rest? Let's explore the data on Blood Volume Pulse
+            (BVP) to understand the difference between baseline and cognitive
+            load states.
+          </p>
+          <h2>
+            Baseline vs. Cognitive Load: A Tale of Physiological Responses
+          </h2>
+          <div id="line-container">
+            <label id="choose-graph">
+              Choose Physiological Response to View:
+              <select>
+                <option value="Blood Volume Pulse (BVP)" selected>
+                  Blood Volume Pulse (BVP)
+                </option>
+                <option value="Temperature">Temperature</option>
+              </select>
+            </label>
+          </div>
+          <div class="step" data-step="9">
+            <div id="bvp-line">
+              <svg id="bvp-line-chart" width="875" height="400"></svg>
+              <label id="bvp-grouping">
+                Group Data By:
+                <select id="bvp-grouping-select">
+                  <option value="tenth_second">Tenth Seconds</option>
+                  <option value="half_second" selected>Half Seconds</option>
+                  <option value="second">Seconds</option>
+                </select>
+              </label>
+            </div>
+            <p id="text">
+              The gray line represents the baseline state (brain at rest), while
+              the orange line represents cognitive load (e.g., during the Stroop
+              Test or surveys). Notice how the orange line consistently shows
+              higher BVP values, reflecting the increased cardiovascular
+              activity that comes with mental effort.
+            </p>
+          </div>
+          <div class="step" data-step="10">
+            <div id="variance-line-container">
+              <svg id="bvp-variance-line-chart" width="875" height="400"></svg>
+              <label id="bvp-variance-grouping">
+                Group Data By:
+                <select>
+                  <option value="tenth_second_var">Tenth Seconds</option>
+                  <option value="half_second_var" selected>Half Seconds</option>
+                  <option value="second_var">Seconds</option>
+                </select>
+              </label>
+            </div>
+            <div class="step" data-step="11">
+              <p id="text">
+                But it's not only the average BVP that changes under cognitive
+                load—the variability of BVP also captures an important story.
+                The variance measures how much the blood volume pulse fluctuates
+                over time. Higher values indicates greater instability in
+                cardiovascular activity, reflecting greater stress or mental
+                strain.
+              </p>
+              <p id="text">
+                These fluctuations in BVP variance highlight the physiological
+                cost of cognitive effort. The higher variance of the cognitive
+                load state furthers the claim that mental effort causes
+                fluctuating BVP, reflecting the strain on the body during tasks
+                that require cognitive engagement.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="step" data-step="12">
+          <p class="hook-text">
+            So, what does this mean for gamified vs. non-gamified surveys?
+          </p>
+        </div>
+        <div class="step" data-step="13">
+          <p id="text">
+            If cognitive tasks like the Stroop Test increase BVP and its
+            variance, we can expect similar patterns in survey responses. The
+            playful elements of gamified surveys may seem less mentally
+            demanding...
+          </p>
+        </div>
+        <div class="step" data-step="14">
+          <p class="hook-text">but the data suggests otherwise.</p>
+        </div>
+        <div class="step" data-step="15">
+          <p id="text" style="margin-top: -1em">
+            Just like the Stroop Test, gamified surveys will likely elicit
+            stronger physiological responses, indicating higher cognitive
+            engagement.
+          </p>
+        </div>
+        <div>
+          <div class="step" data-step="16">
+            <h2>Physiological Reactions Comparison</h2>
+            <div id="swarm-container">
+              <svg id="swarm-chart" width="750" height="400"></svg>
+            </div>
+          </div>
+        </div>
+        <div class="step" data-step="16">
+          <p id="text">
+            Now that we've seen how cognitive tasks like the Stroop Test
+            increase physiological responses, let's apply these insights to
+            gamified and non-gamified surveys. The radar chart compares key
+            metrics—Blood Volume Pulse (BVP), Electrodermal Activity (EDA), and
+            Temperature—between the two survey types. Each axis represents a
+            physiological response, showing how gamified surveys consistently
+            elicit stronger reactions.
+          </p>
+        </div>
+        <div class="step" data-step="17">
+          <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>
+          <div id="radar-container">
+            <svg id="radar-chart" width="500" height="500"></svg>
+            <input
+              id="slider"
+              type="range"
+              min="1"
+              max="360"
+              value="0"
+              step="0.1"
+            />
+            <p id="text">Seconds Elapsed: <output id="sec-num"></output></p>
+          </div>
+        </div>
+        <div class="step" data-step="18">
+          <p id="text">
+            Use the time slider to explore how these metrics change over each
+            second. Notice how the gamified survey (orange) maintains higher
+            physiological responses compared to the non-gamified survey (gray).
+            Though gamified surveys feel more playful, they demand more
+            cognitive effort, as illustrated by the data.
+          </p>
+        </div>
+        <div class="step" data-step="19">
+          <p id="text">
+            The radar chart shows us a clear story: gamified surveys boost
+            engagement but also increase physiological response. This is a
+            trade-off that's crucial for survey designers to consider.
+          </p>
+        </div>
+        <div class="step" data-step="20">
+          <p class="hook-text">So, what does this mean?</p>
+        </div>
+        <div class="step" data-step="21">
+          <h2>The <span id="big">&nbsp; Big &nbsp;</span> Picture</h2>
+          <p id="text">
+            Traditional surveys, while structured, can feel monotonous and lead
+            to disengagement. Gamified surveys, on the other hand, keep
+            respondents engaged but at a cost: higher physiological responses
+            and cognitive effort.
+          </p>
+        </div>
+        <div class="step" data-step="22">
+          <p id="text">
+            So, the choice between gamified and non-gamified surveys isn't just
+            about what looks better. It's about balancing engagement and
+            cognitive load. Gamification maximizes participant engagement but
+            may increase mental load, when traditional surveys prioritize
+            accuracy at the risk of lower engagement.
+          </p>
+        </div>
+        <div class="step" data-step="23">
+          <p id="text">
+            As a data scientist or researcher, designing surveys isn't just
+            about collecting data—it's about collecting
+            <em>high-quality data</em>. By balancing engagement and cognitive
+            load, you can ensure respondents stay motivated throughout, leading
+            to more reliable results.
+          </p>
+        </div>
+        <div class="step" data-step="24">
+          <p id="text">
+            Gamified surveys may boost participation, but they can also
+            introduce noise due to increased cognitive effort. Though less
+            engaging, traditional surveys may yield more consistent responses
+            when necessary.
+          </p>
+        </div>
+        <div class="step" data-step="25">
+          <p id="text">
+            The trick is to design your survey so it matches your goals, making
+            sure the data you collect is actionable and meaningful.
+          </p>
+        </div>
+      </article>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </section>
+
+    <script src="scrollytelling.js"></script>
   </body>
 </html>

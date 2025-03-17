@@ -7,14 +7,11 @@ canvas.height = window.innerHeight;
 let neuralPaths = [];
 let brainImage = new Image();
 
-brainImage.src = "./brain.png";
+brainImage.src = "assets/brain.png";
 console.log(brainImage.src);
 
 const brainCenterX = canvas.width / 2;
 const brainCenterY = canvas.height / 2;
-
-let titleDisplayed = false;
-let brainFaded = false;
 
 function generateNeuralPaths() {
   for (let i = 0; i < 100; i++) {
@@ -39,19 +36,23 @@ function drawNeuralPaths() {
     path.y += Math.sin(path.angle) * path.speed;
   }
 }
+let titleDisplayed = false;
+let brainFaded = false;
+
+let brainImageVisible = true;
 
 function animateBrain() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (!titleDisplayed) {
+  if (brainImageVisible) {
     drawBrainImage();
-    drawNeuralPaths();
   }
+  drawNeuralPaths();
 
   if (
     !titleDisplayed &&
     neuralPaths.every(
-      (path) => Math.hypot(path.x - brainCenterX, path.y - brainCenterY) > 100
+      (path) => Math.hypot(path.x - brainCenterX, path.y - brainCenterY) > 80
     )
   ) {
     document.getElementById("title").style.display = "block";
@@ -60,11 +61,9 @@ function animateBrain() {
   }
 
   if (titleDisplayed && !brainFaded) {
-    setTimeout(() => {
-      brainFaded = true;
-      document.getElementById("title").style.opacity = 1;
-      neuralPaths = [];
-    }, 3000);
+    brainFaded = true;
+    neuralPaths = [];
+    brainImageVisible = false;
   }
 
   requestAnimationFrame(animateBrain);
