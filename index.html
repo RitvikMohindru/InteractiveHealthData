@@ -10,7 +10,6 @@
     <script type="module" src="bvp_variance_line.js"></script>
     <script type="module" src="swarm.js"></script>
     <script type="module" src="stroop.js"></script>
-    <script type="module" src="similarity.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=swap"
@@ -53,21 +52,23 @@
     <div id="line-container">
       <label id="choose-graph">
         Choose Physiological Response to View:
-      <select>
-        <option value="Blood Volume Pulse (BVP)" selected>Blood Volume Pulse (BVP)</option>
-        <option value="Temperature">Temperature</option>
-      </select>
-      </label>
-      <div id="bvp-line">
-      <svg id="bvp-line-chart" width="875" height="400"></svg>
-      <label id="bvp-grouping">
-        Group Data By:
         <select>
-          <option value="tenth_second">Tenth Seconds</option>
-          <option value="half_second" selected>Half Seconds</option>
-          <option value="second">Seconds</option>
+          <option value="Blood Volume Pulse (BVP)" selected>
+            Blood Volume Pulse (BVP)
+          </option>
+          <option value="Temperature">Temperature</option>
         </select>
       </label>
+      <div id="bvp-line">
+        <svg id="bvp-line-chart" width="875" height="400"></svg>
+        <label id="bvp-grouping">
+          Group Data By:
+          <select>
+            <option value="tenth_second">Tenth Seconds</option>
+            <option value="half_second" selected>Half Seconds</option>
+            <option value="second">Seconds</option>
+          </select>
+        </label>
       </div>
     </div>
     <br />
