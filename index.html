@@ -10,6 +10,7 @@
     <script type="module" src="bvp_variance_line.js"></script>
     <script type="module" src="swarm.js"></script>
     <script type="module" src="stroop.js"></script>
+    <script type="module" src="similarity.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=swap"
@@ -34,8 +35,10 @@
           <strong class="yellow">y</strong> for Yellow
         </p>
         <div id="stroop-game-stats">
-          <p>Score: <span id="stroop-score">0</span></p>
-          <p>Time Left: <span id="stroop-timer">20</span>s</p>
+          <p id="score">Score: <span id="stroop-score">0</span></p>
+          <p id="response-time">
+            Response Time: <span id="stroop-response-time">0</span>
+          </p>
         </div>
       </div>
       <div id="stroop-word-display"></div>
@@ -44,6 +47,8 @@
       <button id="stroop-reset-button">Reset Game</button>
     </div>
     <br />
+    <div id="similarity-display"></div>
+
     <h2>Baseline vs. Cognitive Load: A Tale of Physiological Responses</h2>
     <div id="line-container">
       <svg id="bvp-line-chart" width="875" height="400"></svg>
