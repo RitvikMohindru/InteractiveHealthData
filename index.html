@@ -49,6 +49,7 @@
               src="assets/example_non_gamified.png"
               alt="Example of a Non-Gamified Survey"
             />
+
             <img
               id="survey-img2"
               src="assets/example_gamified.png"
@@ -59,7 +60,7 @@
             Which survey would require the least mental effort?
           </p>
         </div>
-        <div class="step" data-step="5">
+        <div class="step" data-step="4">
           <p id="text">
             At first glance, the non-gamified survey, seems serious and
             important. On the other hand, the gamified survey, featuring playful
@@ -73,7 +74,7 @@
           </p>
         </div>
 
-        <div class="step" data-step="6">
+        <div class="step" data-step="5">
           <p class="stroop-intro-text">
             To explore how every thought, decision, and action triggers
             physiological responses, consider the Stroop Test. In this
@@ -85,7 +86,7 @@
             cognitive load in action!
           </p>
         </div>
-        <div class="step" data-step="7">
+        <div class="step" data-step="6">
           <h2>Stroop Test: Measuring Cognitive Interference</h2>
           <div id="stroop-game-container">
             <div id="stroop-game-header">
@@ -115,12 +116,10 @@
           <div id="similarity-display"></div>
         </div>
 
-        <div class="step" data-step="8">
+        <div class="step" data-step="7">
           <p id="text">
-            But how do physiological responses compare to cognitive load when
-            the brain is at rest? Let's explore the data on Blood Volume Pulse
-            (BVP) to understand the difference between baseline and cognitive
-            load states.
+            Let's compare physiological responses, such as blood volume pulse
+            (BVP) and temperature, during cognitive load vs. at rest.
           </p>
           <h2>
             Baseline vs. Cognitive Load: A Tale of Physiological Responses
@@ -136,7 +135,7 @@
               </select>
             </label>
           </div>
-          <div class="step" data-step="9">
+          <div class="step" data-step="8">
             <div id="bvp-line">
               <svg id="bvp-line-chart" width="875" height="400"></svg>
               <label id="bvp-grouping">
@@ -160,48 +159,47 @@
               </select>
             </label>
           </div>
-          <div class="step" data-step="11">
-            <!-- <p id="text">
-                But it's not only the average BVP that changes under cognitive
-                load—the variability of BVP also captures an important story.
-                The variance measures how much the blood volume pulse fluctuates
-                over time. Higher values indicates greater instability in
-                cardiovascular activity, reflecting greater stress or mental
-                strain.
+          <div class="step" data-step="9">
+            <div id="temp-text-container" style="display: none">
+              <p id="temp-text">
+                Similarly, higher cognitive load correlates to a higher
+                temperature!
               </p>
-              <p id="text">
-                These fluctuations in BVP variance highlight the physiological
-                cost of cognitive effort. The higher variance of the cognitive
-                load state furthers the claim that mental effort causes
-                fluctuating BVP, reflecting the strain on the body during tasks
-                that require cognitive engagement.
-              </p> -->
-            <!-- <p id="text">
-                The gray line represents the baseline state (brain at rest),
-                while the orange line represents cognitive load (e.g., during
-                the Stroop Test or surveys). Notice how the orange line
-                consistently shows higher BVP values, reflecting the increased
-                cardiovascular activity that comes with mental effort.
-              </p> -->
+            </div>
+            <div id="bvp-text-container">
+              <p id="bvp-text">
+                These graphs illustrate how cognitive load is associated with
+                higher average BVP and variability in BVP. The variance measures
+                how much the blood volume pulse fluctuates over time. Higher
+                values indicate greater instability in cardiovascular activity,
+                reflecting greater stress or mental strain.
+              </p>
+            </div>
           </div>
         </div>
-        <div class="step" data-step="12">
+        <div class="step" data-step="10">
+          <p id="text">
+            Essentially, under cognitive load, the body tends to elicit more
+            physiological responses.
+          </p>
+          <br /><br />
           <p class="hook-text">
             So, what does this mean for gamified vs. non-gamified surveys?
           </p>
         </div>
-        <div class="step" data-step="13">
+        <div class="step" data-step="11">
           <p id="text">
-            If cognitive tasks like the Stroop Test increase BVP and its
-            variance, we can expect similar patterns in survey responses. The
-            playful elements of gamified surveys may seem less mentally
-            demanding...
+            If cognitive load increases physiological responses like BVP
+            variance and temperature, a similar pattern should be observed in
+            survey respondents. The playful elements of the gamified survey seem
+            less mentally demanding and should result in lower physiological
+            responses...
           </p>
         </div>
-        <div class="step" data-step="14">
+        <div class="step" data-step="12">
           <p class="hook-text">but the data suggests otherwise.</p>
         </div>
-        <div class="step" data-step="15">
+        <div class="step" data-step="13">
           <p id="text" style="margin-top: -1em">
             Just like the Stroop Test, gamified surveys will likely elicit
             stronger physiological responses, indicating higher cognitive
@@ -209,14 +207,14 @@
           </p>
         </div>
         <div>
-          <div class="step" data-step="16">
+          <div class="step" data-step="14">
             <h2>Physiological Reactions Comparison</h2>
             <div id="swarm-container">
               <svg id="swarm-chart" width="750" height="400"></svg>
             </div>
           </div>
         </div>
-        <div class="step" data-step="16">
+        <div class="step" data-step="15">
           <p id="text">
             Now that we've seen how cognitive tasks like the Stroop Test
             increase physiological responses, let's apply these insights to
@@ -227,7 +225,7 @@
             elicit stronger reactions.
           </p>
         </div>
-        <div class="step" data-step="17">
+        <div class="step" data-step="16">
           <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>
           <div id="pcp-container" style="width: 800px; margin: 0 auto">
             <svg id="parallel-coordinate-plot"></svg>
@@ -247,7 +245,7 @@
             </div>
           </div>
         </div>
-        <div class="step" data-step="18">
+        <div class="step" data-step="17">
           <p id="text">
             Use the time slider to explore how these metrics change over each
             second. Notice how the gamified survey (orange) maintains higher
@@ -256,17 +254,17 @@
             cognitive effort, as illustrated by the data.
           </p>
         </div>
-        <div class="step" data-step="19">
+        <div class="step" data-step="18">
           <p id="text">
             The radar chart shows us a clear story: gamified surveys boost
             engagement but also increase physiological response. This is a
             trade-off that's crucial for survey designers to consider.
           </p>
         </div>
-        <div class="step" data-step="20">
+        <div class="step" data-step="19">
           <p class="hook-text">So, what does this mean?</p>
         </div>
-        <div class="step" data-step="21">
+        <div class="step" data-step="20">
           <h2>The <span id="big">&nbsp; BIG &nbsp;</span> Picture</h2>
           <p id="text">
             Traditional surveys, while structured, can feel monotonous and lead
@@ -275,7 +273,7 @@
             and cognitive effort.
           </p>
         </div>
-        <div class="step" data-step="22">
+        <div class="step" data-step="21">
           <p id="text">
             So, the choice between gamified and non-gamified surveys isn't just
             about what looks better. It's about balancing engagement and
@@ -284,7 +282,7 @@
             accuracy at the risk of lower engagement.
           </p>
         </div>
-        <div class="step" data-step="23">
+        <div class="step" data-step="22">
           <p id="text">
             As a data scientist or researcher, designing surveys isn't just
             about collecting data—it's about collecting
@@ -293,7 +291,7 @@
             to more reliable results.
           </p>
         </div>
-        <div class="step" data-step="24">
+        <div class="step" data-step="23">
           <p id="text">
             Gamified surveys may boost participation, but they can also
             introduce noise due to increased cognitive effort. Though less
@@ -301,7 +299,7 @@
             when necessary.
           </p>
         </div>
-        <div class="step" data-step="25">
+        <div class="step" data-step="24">
           <p id="text">
             The trick is to design your survey so it matches your goals, making
             sure the data you collect is actionable and meaningful.
@@ -317,14 +315,22 @@
         const varianceLineContainer = document.getElementById(
           "variance-line-container"
         );
+        const tempTextContainer = document.getElementById(
+          "temp-text-container"
+        );
+        const bvpTextContainer = document.getElementById("bvp-text-container");
 
         physioSelect.addEventListener("change", function (event) {
           const selectedValue = event.target.value;
 
           if (selectedValue === "Temperature") {
             varianceLineContainer.style.display = "none";
+            bvpTextContainer.style.display = "none";
+            tempTextContainer.style.display = "block";
           } else {
             varianceLineContainer.style.display = "block";
+            bvpTextContainer.style.display = "block";
+            tempTextContainer.style.display = "none";
           }
         });
       });
@@ -346,7 +352,6 @@
           }
         }
 
-        // Delay the typing effect by 5 seconds
         setTimeout(typeText, delayBeforeTyping);
       });
     </script>
