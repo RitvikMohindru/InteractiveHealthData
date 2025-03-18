@@ -114,14 +114,14 @@ function updateChart(data) {
     .attr("transform", `translate(0, ${height})`)
     .call(xAxis)
     .selectAll("text")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "15px");
 
   chartGroup
     .append("g")
     .call(yAxis)
     .selectAll("text")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "15px");
 
   chartGroup
@@ -129,7 +129,7 @@ function updateChart(data) {
     .attr("x", width / 2)
     .attr("y", height + 55)
     .attr("text-anchor", "middle")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "16px")
     .text("Time (seconds)");
 
@@ -139,7 +139,7 @@ function updateChart(data) {
     .attr("x", -height / 2)
     .attr("y", -50)
     .attr("text-anchor", "middle")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "16px")
     .text("Electrodermal Activity (EDA)");
 
@@ -148,7 +148,7 @@ function updateChart(data) {
     .attr("x", svgWidth / 2.1)
     .attr("y", 30)
     .attr("text-anchor", "middle")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "24px")
     .style("font-weight", "bolder")
     .text("Physical Response to Gamified vs. Non-Gamified Cognitive Tasks");
@@ -160,7 +160,7 @@ function updateChart(data) {
     .attr("x", -135)
     .attr("y", 45)
     .text("Gamified")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "14px");
 
   const legend2 = svg.append("g").attr("transform", "translate(685, 115)");
@@ -170,7 +170,7 @@ function updateChart(data) {
     .attr("x", -135)
     .attr("y", 120)
     .text("Non-Gamified")
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "14px");
 
   // Add legend
@@ -197,7 +197,7 @@ function updateChart(data) {
     .append("text")
     .attr("x", -40)
     .attr("y", 45)
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "14px")
     .text("High");
 
@@ -205,7 +205,7 @@ function updateChart(data) {
     .append("text")
     .attr("x", -40)
     .attr("y", 165)
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "14px")
     .text("Low");
 
@@ -215,7 +215,7 @@ function updateChart(data) {
     .attr("transform", "rotate(90)")
     .attr("x", 50)
     .attr("y", 10)
-    .style("font-family", "'Merriweather'")
+    .style("font-family", "Domine")
     .style("font-size", "14px")
     .text("Temperature (°C)");
 
@@ -375,7 +375,7 @@ function updateSmallChart(sec) {
         .attr("x", smallWidth / 2)
         .attr("y", smallMargin.top / 2)
         .attr("text-anchor", "middle")
-        .style("font-family", "'Merriweather'")
+        .style("font-family", "Domine")
         .style("font-size", "18px")
         .style("font-weight", "bolder")
         .text(`BVP for Second ${sec}`);
@@ -401,7 +401,7 @@ function updateSmallChart(sec) {
         .attr("transform", `translate(0, ${innerHeight})`)
         .call(xAxisSmall)
         .selectAll("text")
-        .style("font-family", "'Merriweather'");
+        .style("font-family", "Domine");
 
       // Append y-axis
       smallChartGroup
@@ -409,7 +409,7 @@ function updateSmallChart(sec) {
         .attr("class", "y-axis") // Add a class for easy removal
         .call(yAxisSmall)
         .selectAll("text")
-        .style("font-family", "'Merriweather'");
+        .style("font-family", "Domine");
 
       // Filter gamified and non-gamified data
       const gamifiedSmallData = filteredData.filter(
@@ -443,7 +443,7 @@ function updateSmallChart(sec) {
         .attr("x", innerWidth / 2)
         .attr("y", innerHeight + 40)
         .attr("text-anchor", "middle")
-        .style("font-family", "'Merriweather'")
+        .style("font-family", "Domine")
         .style("font-size", "14px")
         .text("Time (seconds)");
 
@@ -453,7 +453,7 @@ function updateSmallChart(sec) {
         .attr("x", -innerHeight / 2)
         .attr("y", -40)
         .attr("text-anchor", "middle")
-        .style("font-family", "'Merriweather'")
+        .style("font-family", "Domine")
         .style("font-size", "14px")
         .text("Blood Volume Pulse");
     })
