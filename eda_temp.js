@@ -321,7 +321,16 @@ function updateChart(data){
 
 
 function updateSmallChart() {
-  const smallWidth = 125; // Adjust as needed
+  const filePath = `./data/bvp_line_data/60_mean_bvp_by_tenth_second.csv`; // Adjust the path as needed
+
+  d3.csv(`./data/bvp_line_data/60_mean_bvp_by_tenth_second.csv`)
+    .then((smallData) => {
+      smallData.forEach((d) => {
+        d.time = parseFloat(d.time_elapsed);
+        d.bvp = parseFloat(d.bvp);
+      });
+
+  const smallWidth = 500; // Adjust as needed
   const smallHeight = 300;
   const smallMargin = { top: 90, right: 50, bottom: 50, left: 50 };
   const innerWidth = smallWidth - smallMargin.left - smallMargin.right;
@@ -330,32 +339,112 @@ function updateSmallChart() {
 
   const xSmallScale = d3
         .scaleLinear()
-        .domain([0, 24.5])
+        .domain([0, 10])
         .range([0, innerWidth]);
 
 
   const ySmallScale = d3
         .scaleLinear()
-        .domain([0, 60])
-        .range([innerHeight, 0]);
+        .domain([d3.min(smallData, (d) => d.bvp) - 0.5, d3.max(smallData, (d) => d.bvp) + 0.5])
+        .range([innerHeight, -30]);
+
+  // Define line function
+  const lineSmall = d3
+  .line()
+  .x((d) => xSmallScale(d.time))
+  .y((d) => ySmallScale(d.bvp));
+
+// Clear previous graph
+  d3.select("#bvp-side-chart svg").remove();
 
 
-  const smallSvg = d3.select("#bvp-side-chart");
+  const smallSvg = d3
+        .select("#bvp-side-chart")
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("viewBox", `0 0 ${smallWidth} ${smallHeight}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
+
   smallSvg
         .append("text")
-        .attr("x", smallWidth / 1.5)
+        .attr("x", smallWidth / 2)
         .attr("y", smallHeight - 270)
         .attr("text-anchor", "middle")
         .style("font-family", "'Merriweather'")
         .style("font-size", "18px")
         .style("font-weight", "bolder")
         .text("BVP for Second ##");
+
+  const smallChartGroup = smallSvg
+        .append("g")
+        .attr(
+          "transform",
+          `translate(${smallMargin.left}, ${smallMargin.top})`
+        );
+
+  const xAxisSmall = d3.axisBottom(xSmallScale).tickSize(7);
+  const yAxisSmall = d3.axisLeft(ySmallScale).tickSize(7);
+
+  const gamifiedSmallData = smallData.filter((d) => d.gamified_or_no === "gamified");
+  const nongamifiedSmallData = smallData.filter((d) => d.gamified_or_no === "non_gamified");
+
+    // Append gamified line
+    smallChartGroup
+    .append("path")
+    .datum(gamifiedSmallData)
+    .attr("fill", "none")
+    .attr("stroke", "#FF7F7")
+    .attr("stroke-width", 2)
+    .attr("d", lineSmall);
+
+  // Append non gamified line
+  smallChartGroup
+    .append("path")
+    .datum(nongamifiedSmallData)
+    .attr("fill", "none")
+    .attr("stroke", "#808080")
+    .attr("stroke-width", 2)
+    .attr("d", lineSmall);
+
+  smallChartGroup
+        .append("g")
+        .attr("transform", `translate(0, ${innerHeight})`)
+        .call(xAxisSmall)
+        .selectAll("text")
+        .style("font-family", "'Merriweather'");
+
+      smallChartGroup
+        .append("g")
+        .call(yAxisSmall)
+        .selectAll("text")
+        .style("font-family", "'Merriweather'");
+      
+      smallChartGroup
+        .append("text")
+        .attr("x", innerWidth / 2)
+        .attr("y", innerHeight + 40)
+        .attr("text-anchor", "middle")
+        .style("font-family", "'Merriweather'")
+        .style("font-size", "14px")
+        .text("Time (seconds)");
+
+      smallChartGroup
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -innerHeight / 2)
+        .attr("y", -30)
+        .attr("text-anchor", "middle")
+        .style("font-family", "'Merriweather'")
+        .style("font-size", "14px")
+        .text("Blood Volume Pulse");
+      })
+      .catch((error) => console.error(`Error loading ${filePath}:`, error));
 }
 
 
 async function main() {
     const data = await loadData();
-    console.log("Data Loaded: ", data.slice(0, 5));
     updateChart(data);
     updateSmallChart();
 }
