@@ -227,7 +227,9 @@
                 value="1"
                 step="2"
               />
-              <p id="bruh">Starting Second: <output id="chosen-sec"></output></p>
+              <p id="bruh">
+                Starting Second: <output id="chosen-sec"></output>
+              </p>
             </div>
           </div>
         </div>
@@ -301,6 +303,31 @@
       window.onbeforeunload = function () {
         window.scrollTo(0, 0);
       };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const physioSelect = document.getElementById("physio-select");
+        const varianceLineContainer = document.getElementById(
+          "variance-line-container"
+        );
+        const tempTextContainer = document.getElementById(
+          "temp-text-container"
+        );
+        const bvpTextContainer = document.getElementById("bvp-text-container");
+
+        physioSelect.addEventListener("change", function (event) {
+          const selectedValue = event.target.value;
+
+          if (selectedValue === "Temperature") {
+            varianceLineContainer.style.display = "none";
+            bvpTextContainer.style.display = "none";
+            tempTextContainer.style.display = "block";
+          } else {
+            varianceLineContainer.style.display = "block";
+            bvpTextContainer.style.display = "block";
+            tempTextContainer.style.display = "none";
+          }
+        });
+      });
 
       document.addEventListener("DOMContentLoaded", function () {
         const text =

@@ -529,3 +529,11 @@ footer {
 li {
   margin-left: 3em;
 }
+
+#text .highlight {
+  background-color: #f5d5909f;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+  color: #333;
+}
