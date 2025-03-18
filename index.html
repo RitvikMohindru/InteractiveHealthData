@@ -212,9 +212,16 @@
             <div id="swarm-container">
               <svg id="swarm-chart" width="750" height="400"></svg>
               <div id="small-plot">
-              <svg id="bvp-side-chart" width="500" height="300"></svg>
-              <input id="small-slider" type="range" min="1" max="60" value="1" step="2" />
-            </div>
+                <svg id="bvp-side-chart" width="500" height="300"></svg>
+                <input
+                  id="small-slider"
+                  type="range"
+                  min="1"
+                  max="60"
+                  value="1"
+                  step="2"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -251,18 +258,17 @@
         </div>
         <div class="step" data-step="17">
           <p id="text">
-            Use the time slider to explore how these metrics change over each
-            second. Notice how the gamified survey (orange) maintains higher
-            physiological responses compared to the non-gamified survey (gray).
-            Though gamified surveys feel more playful, they demand more
-            cognitive effort, as illustrated by the data.
+            Essentially, these visualizations make it clear: respondents taking
+            gamified surveys have increased physiological responses compared to
+            those taking non-gamified ones, concluding that those responding to
+            gamified surveys are under more cognitive load than non-gamified.
           </p>
         </div>
         <div class="step" data-step="18">
           <p id="text">
-            The radar chart shows us a clear story: gamified surveys boost
-            engagement but also increase physiological response. This is a
-            trade-off that's crucial for survey designers to consider.
+            Therefore, we can conclude that respondents are more cognitive
+            engaged while taking the gamified surveys than non-gamified surveys.
+            Isn’t that surprising? So what does this mean?
           </p>
         </div>
         <div class="step" data-step="19">
@@ -270,29 +276,24 @@
         </div>
         <div class="step" data-step="20">
           <h2>The <span id="big">&nbsp; BIG &nbsp;</span> Picture</h2>
-          <p id="text">
-            Traditional surveys, while structured, can feel monotonous and lead
-            to disengagement. Gamified surveys, on the other hand, keep
-            respondents engaged but at a cost: higher physiological responses
-            and cognitive effort.
-          </p>
         </div>
         <div class="step" data-step="21">
           <p id="text">
-            So, the choice between gamified and non-gamified surveys isn't just
-            about what looks better. It's about balancing engagement and
-            cognitive load. Gamification maximizes participant engagement but
-            may increase mental load, when traditional surveys prioritize
-            accuracy at the risk of lower engagement.
+            The choice between gamified and non-gamified surveys isn't just
+            about what looks better. It's about balancing engagement and survey
+            reliability. Gamified surveys may boost engagement, but they can
+            also introduce noise due to increased cognitive effort. Though less
+            engaging, traditional surveys may yield more consistent responses
+            when necessary.
           </p>
         </div>
         <div class="step" data-step="22">
           <p id="text">
-            As a data scientist or researcher, designing surveys isn't just
-            about collecting data—it's about collecting
-            <em>high-quality data</em>. By balancing engagement and cognitive
-            load, you can ensure respondents stay motivated throughout, leading
-            to more reliable results.
+            As a data scientist or researcher, designing surveys is about
+            collecting <em>high-quality data</em>. The trick is to design your
+            survey by balancing engagement and reliability so it matches your
+            goals, making sure the data you collect is actionable and
+            meaningful.
           </p>
         </div>
         <div class="step" data-step="23">
@@ -314,30 +315,9 @@
     </section>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const physioSelect = document.getElementById("physio-select");
-        const varianceLineContainer = document.getElementById(
-          "variance-line-container"
-        );
-        const tempTextContainer = document.getElementById(
-          "temp-text-container"
-        );
-        const bvpTextContainer = document.getElementById("bvp-text-container");
-
-        physioSelect.addEventListener("change", function (event) {
-          const selectedValue = event.target.value;
-
-          if (selectedValue === "Temperature") {
-            varianceLineContainer.style.display = "none";
-            bvpTextContainer.style.display = "none";
-            tempTextContainer.style.display = "block";
-          } else {
-            varianceLineContainer.style.display = "block";
-            bvpTextContainer.style.display = "block";
-            tempTextContainer.style.display = "none";
-          }
-        });
-      });
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      };
 
       document.addEventListener("DOMContentLoaded", function () {
         const text =
@@ -346,7 +326,6 @@
 
         let index = 0;
         const typingSpeed = 25;
-        const delayBeforeTyping = 4000;
 
         function typeText() {
           if (index < text.length) {
@@ -356,7 +335,19 @@
           }
         }
 
-        setTimeout(typeText, delayBeforeTyping);
+        function isInViewport(element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top >= 0 && rect.bottom <= window.innerHeight;
+        }
+
+        window.addEventListener("scroll", function () {
+          const step1 = document.querySelector('[data-step="1"]');
+
+          if (isInViewport(step1)) {
+            setTimeout(typeText);
+            window.removeEventListener("scroll", arguments.callee);
+          }
+        });
       });
     </script>
 

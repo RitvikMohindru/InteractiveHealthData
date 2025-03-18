@@ -92,7 +92,8 @@ select {
 
 #small-plot {
   display: flex;
-  flex-direction: column; /* Stack BVP chart and slider vertically */
+  flex-direction: column;
+  /* Stack BVP chart and slider vertically */
 }
 
 #small-slider {
@@ -387,13 +388,13 @@ article {
   color: #555;
 }
 
-.step[data-step="20"] .hook-text {
+.step[data-step="19"] .hook-text {
   /* margin-top: -0.5em; */
   font-size: 1.6rem;
   color: #555;
 }
 
-.step[data-step="25"] #text {
+.step[data-step="24"] #text {
   margin-top: -0.5em;
   font-size: 1.6rem;
   color: #555;
