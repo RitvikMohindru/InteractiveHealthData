@@ -10,6 +10,7 @@
     <script type="module" src="bvp_variance_line.js"></script>
     <script type="module" src="swarm.js"></script>
     <script type="module" src="stroop.js"></script>
+    <script type="module" src="parallel_plot.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Domine:wght@400;700&display=swap"
@@ -148,7 +149,7 @@
           <div id="line-container">
             <label id="choose-graph">
               Choose Physiological Response to View:
-              <select>
+              <select id="physio-select">
                 <option value="Blood Volume Pulse (BVP)" selected>
                   Blood Volume Pulse (BVP)
                 </option>
@@ -168,28 +169,20 @@
                 </select>
               </label>
             </div>
-            <p id="text">
-              The gray line represents the baseline state (brain at rest), while
-              the orange line represents cognitive load (e.g., during the Stroop
-              Test or surveys). Notice how the orange line consistently shows
-              higher BVP values, reflecting the increased cardiovascular
-              activity that comes with mental effort.
-            </p>
           </div>
-          <div class="step" data-step="10">
-            <div id="variance-line-container">
-              <svg id="bvp-variance-line-chart" width="875" height="400"></svg>
-              <label id="bvp-variance-grouping">
-                Group Data By:
-                <select>
-                  <option value="tenth_second_var">Tenth Seconds</option>
-                  <option value="half_second_var" selected>Half Seconds</option>
-                  <option value="second_var">Seconds</option>
-                </select>
-              </label>
-            </div>
-            <div class="step" data-step="11">
-              <p id="text">
+          <div id="variance-line-container">
+            <svg id="bvp-variance-line-chart" width="875" height="400"></svg>
+            <label id="bvp-variance-grouping">
+              Group Data By:
+              <select>
+                <option value="tenth_second_var">Tenth Seconds</option>
+                <option value="half_second_var" selected>Half Seconds</option>
+                <option value="second_var">Seconds</option>
+              </select>
+            </label>
+          </div>
+          <div class="step" data-step="11">
+            <!-- <p id="text">
                 But it's not only the average BVP that changes under cognitive
                 load—the variability of BVP also captures an important story.
                 The variance measures how much the blood volume pulse fluctuates
@@ -203,8 +196,14 @@
                 load state furthers the claim that mental effort causes
                 fluctuating BVP, reflecting the strain on the body during tasks
                 that require cognitive engagement.
-              </p>
-            </div>
+              </p> -->
+            <!-- <p id="text">
+                The gray line represents the baseline state (brain at rest),
+                while the orange line represents cognitive load (e.g., during
+                the Stroop Test or surveys). Notice how the orange line
+                consistently shows higher BVP values, reflecting the increased
+                cardiovascular activity that comes with mental effort.
+              </p> -->
           </div>
         </div>
         <div class="step" data-step="12">
@@ -251,17 +250,22 @@
         </div>
         <div class="step" data-step="17">
           <h2>Gamified vs. Non-Gamified Surveys: Engaging the Mind</h2>
-          <div id="radar-container">
-            <svg id="radar-chart" width="500" height="500"></svg>
-            <input
-              id="slider"
-              type="range"
-              min="1"
-              max="360"
-              value="0"
-              step="0.1"
-            />
-            <p id="text">Seconds Elapsed: <output id="sec-num"></output></p>
+          <div id="pcp-container" style="width: 800px; margin: 0 auto">
+            <svg id="parallel-coordinate-plot"></svg>
+            <div
+              id="slider-container"
+              style="text-align: center; margin-top: 10px"
+            >
+              <input
+                id="slider"
+                type="range"
+                min="1"
+                max="360"
+                value="0"
+                value="0.1"
+              />
+              <p id="text">Seconds Elapsed: <span id="sec-num">1</span></p>
+            </div>
           </div>
         </div>
         <div class="step" data-step="18">
@@ -284,7 +288,7 @@
           <p class="hook-text">So, what does this mean?</p>
         </div>
         <div class="step" data-step="21">
-          <h2>The <span id="big">&nbsp; Big &nbsp;</span> Picture</h2>
+          <h2>The <span id="big">&nbsp; BIG &nbsp;</span> Picture</h2>
           <p id="text">
             Traditional surveys, while structured, can feel monotonous and lead
             to disengagement. Gamified surveys, on the other hand, keep
@@ -327,6 +331,25 @@
       </article>
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const physioSelect = document.getElementById("physio-select");
+        const varianceLineContainer = document.getElementById(
+          "variance-line-container"
+        );
+
+        physioSelect.addEventListener("change", function (event) {
+          const selectedValue = event.target.value;
+
+          if (selectedValue === "Temperature") {
+            varianceLineContainer.style.display = "none";
+          } else {
+            varianceLineContainer.style.display = "block";
+          }
+        });
+      });
+    </script>
 
     <script src="scrollytelling.js"></script>
   </body>
