@@ -168,13 +168,13 @@ function updateChart(data) {
 
   svg
     .append("text")
-    .attr("x", svgWidth / 2.1)
+    .attr("x", svgWidth / 2)
     .attr("y", 30)
     .attr("text-anchor", "middle")
     .style("font-family", "'Merriweather'")
     .style("font-size", "24px")
     .style("font-weight", "bolder")
-    .text("Physical Response to Gamified vs. Non-Gamified Cognitive Tasks");
+    .text("Physical Response to Gamified vs. Non-Gamified Tasks");
 
 
   const legend = svg.append("g").attr("transform", "translate(685, 90)");
