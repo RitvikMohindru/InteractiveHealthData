@@ -301,45 +301,66 @@ function updateChart(data) {
   svg.on("mouseleave", () => {
     chartGroup.selectAll("circle").attr("r", 4); // Reset the size of all dots
   });
+
+  document.getElementById("small-slider").step = "1";
+  const value = document.querySelector("#chosen-sec");
+  const input = document.querySelector("#small-slider");
+  value.textContent = input.value;
+  input.addEventListener("input", (event) => {
+    const sec = event.target.value;
+    value.textContent = sec;
+    updateSmallChart(sec);
+  });
+
+  updateSmallChart(1);
 }
 
-function updateSmallChart() {
-  const filePath = `./data/bvp_line_data/60_mean_bvp_by_tenth_second.csv`; // Adjust the path as needed
-
-  d3.csv(`./data/bvp_line_data/60_mean_bvp_by_tenth_second.csv`)
+function updateSmallChart(sec) {
+  d3.csv(`./data/bvp_real.csv`)
     .then((smallData) => {
       smallData.forEach((d) => {
-        d.time = parseFloat(d.time_elapsed);
+        d.time = parseFloat(d.time_elapsed).toFixed(1);
         d.bvp = parseFloat(d.bvp);
       });
 
-      const smallWidth = 500; // Adjust as needed
+      // Filter data to only include points within the given second
+      const filteredData = smallData.filter(
+        (d) => d.time >= sec && d.time < sec + 1
+      );
+
+      console.log(`Filtered data for sec = ${sec}:`, filteredData); // Debugging log
+
+      const smallWidth = 500;
       const smallHeight = 300;
       const smallMargin = { top: 90, right: 50, bottom: 50, left: 50 };
       const innerWidth = smallWidth - smallMargin.left - smallMargin.right;
       const innerHeight = smallHeight - smallMargin.top - smallMargin.bottom;
 
+      if (filteredData.length === 0) {
+        console.warn(`No data found for sec = ${sec}`);
+        return;
+      }
+
       const xSmallScale = d3
         .scaleLinear()
-        .domain([0, 10])
+        .domain([sec, sec + 1]) // Reset x-axis domain
         .range([0, innerWidth]);
 
       const ySmallScale = d3
         .scaleLinear()
         .domain([
-          d3.min(smallData, (d) => d.bvp) - 0.5,
-          d3.max(smallData, (d) => d.bvp) + 0.5,
+          d3.min(filteredData, (d) => d.bvp) - 0.5,
+          d3.max(filteredData, (d) => d.bvp) + 0.5,
         ])
-        .range([innerHeight, -30]);
+        .range([innerHeight, -20]);
 
-      // Define line function
       const lineSmall = d3
         .line()
         .x((d) => xSmallScale(d.time))
         .y((d) => ySmallScale(d.bvp));
 
       // Clear previous graph
-      d3.select("#bvp-side-chart svg").remove();
+      d3.select("#bvp-side-chart").select("svg").remove();
 
       const smallSvg = d3
         .select("#bvp-side-chart")
@@ -352,12 +373,12 @@ function updateSmallChart() {
       smallSvg
         .append("text")
         .attr("x", smallWidth / 2)
-        .attr("y", smallHeight - 270)
+        .attr("y", smallMargin.top / 2)
         .attr("text-anchor", "middle")
         .style("font-family", "'Merriweather'")
         .style("font-size", "18px")
         .style("font-weight", "bolder")
-        .text("BVP for Second ##");
+        .text(`BVP for Second ${sec}`);
 
       const smallChartGroup = smallSvg
         .append("g")
@@ -366,13 +387,35 @@ function updateSmallChart() {
           `translate(${smallMargin.left}, ${smallMargin.top})`
         );
 
-      const xAxisSmall = d3.axisBottom(xSmallScale).tickSize(7);
-      const yAxisSmall = d3.axisLeft(ySmallScale).tickSize(7);
+      const xAxisSmall = d3.axisBottom(xSmallScale).ticks(5).tickSize(7);
+      const yAxisSmall = d3.axisLeft(ySmallScale).ticks(5).tickSize(7);
 
-      const gamifiedSmallData = smallData.filter(
+      // Remove old axes before adding new ones
+      smallChartGroup.select(".x-axis").remove();
+      smallChartGroup.select(".y-axis").remove();
+
+      // Append x-axis
+      smallChartGroup
+        .append("g")
+        .attr("class", "x-axis") // Add a class for easy removal
+        .attr("transform", `translate(0, ${innerHeight})`)
+        .call(xAxisSmall)
+        .selectAll("text")
+        .style("font-family", "'Merriweather'");
+
+      // Append y-axis
+      smallChartGroup
+        .append("g")
+        .attr("class", "y-axis") // Add a class for easy removal
+        .call(yAxisSmall)
+        .selectAll("text")
+        .style("font-family", "'Merriweather'");
+
+      // Filter gamified and non-gamified data
+      const gamifiedSmallData = filteredData.filter(
         (d) => d.gamified_or_no === "gamified"
       );
-      const nongamifiedSmallData = smallData.filter(
+      const nongamifiedSmallData = filteredData.filter(
         (d) => d.gamified_or_no === "non_gamified"
       );
 
@@ -381,11 +424,11 @@ function updateSmallChart() {
         .append("path")
         .datum(gamifiedSmallData)
         .attr("fill", "none")
-        .attr("stroke", "#FF7F7")
+        .attr("stroke", "#FF7F7F")
         .attr("stroke-width", 2)
         .attr("d", lineSmall);
 
-      // Append non gamified line
+      // Append non-gamified line
       smallChartGroup
         .append("path")
         .datum(nongamifiedSmallData)
@@ -394,19 +437,7 @@ function updateSmallChart() {
         .attr("stroke-width", 2)
         .attr("d", lineSmall);
 
-      smallChartGroup
-        .append("g")
-        .attr("transform", `translate(0, ${innerHeight})`)
-        .call(xAxisSmall)
-        .selectAll("text")
-        .style("font-family", "'Merriweather'");
-
-      smallChartGroup
-        .append("g")
-        .call(yAxisSmall)
-        .selectAll("text")
-        .style("font-family", "'Merriweather'");
-
+      // Axis labels
       smallChartGroup
         .append("text")
         .attr("x", innerWidth / 2)
@@ -420,13 +451,13 @@ function updateSmallChart() {
         .append("text")
         .attr("transform", "rotate(-90)")
         .attr("x", -innerHeight / 2)
-        .attr("y", -30)
+        .attr("y", -40)
         .attr("text-anchor", "middle")
         .style("font-family", "'Merriweather'")
         .style("font-size", "14px")
         .text("Blood Volume Pulse");
     })
-    .catch((error) => console.error(`Error loading ${filePath}:`, error));
+    .catch((error) => console.error(`Error loading CSV:`, error));
 }
 
 async function main() {
