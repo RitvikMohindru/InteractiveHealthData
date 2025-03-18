@@ -1,5 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
+
 async function loadData() {
     let data = await d3.csv("./data/swarm_data/original_combined_stats_1_min.csv", (d) => {
         d.time_elapsed = parseFloat(d.time_elapsed);
@@ -12,33 +13,38 @@ async function loadData() {
     return data;
 }
 
+
 function updateChart(data){
     const svgWidth = 750;
     const svgHeight = 400;
-    const margin = { top: 50, right: 135, bottom: 80, left: 110 };
-    
+    const margin = { top: 50, right: 135, bottom: 80, left: 70 };
+   
     const width = svgWidth - margin.left - margin.right;
     const height = svgHeight - margin.top - margin.bottom;
-    
+   
     const svg = d3.select("#swarm-chart")
         .attr("width", svgWidth)
         .attr("height", svgHeight);
-    
+   
     svg.selectAll("*").remove();
+
 
     const gamifiedData = data.filter((d) => d.gamified_or_no === "gamified");
     const nongamifiedData = data.filter((d) => d.gamified_or_no === "non_gamified");
 
-    const xScale = d3.scaleLinear().domain([0, 60]).range([0, width]);
+
+    const xScale = d3.scaleLinear().domain([0, 60]).range([0, width-70]);
+
 
     const yScale = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d.eda) + 0.5])
       .range([height, 0]);
-    
+   
     let colorScale = d3.scaleQuantize()
             .domain([d3.min(data, d => d.temp), d3.max(data, d => d.temp)])
             .range(["#4575B4", "#91C3E6", "#deb6ab", "#F1957A", "#D73027"]);
+
 
     const lineGamified = d3
       .line()
@@ -46,15 +52,18 @@ function updateChart(data){
       .x((d) => xScale(d.time_elapsed))
       .y((d) => yScale(d.eda));
 
+
     const lineNonGamified = d3
       .line()
       .defined((d) => !isNaN(d.eda))
       .x((d) => xScale(d.time_elapsed))
       .y((d) => yScale(d.eda));
 
+
     const chartGroup = svg
       .append("g")
       .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
 
     chartGroup
       .append("path")
@@ -64,6 +73,7 @@ function updateChart(data){
       .attr("stroke", "#808080")
       .attr("stroke-width", 2);
 
+
     chartGroup
       .append("path")
       .datum(nongamifiedData)
@@ -72,9 +82,11 @@ function updateChart(data){
       .attr("stroke", "#808080")
       .attr("stroke-width", 2);
 
+
     // Filter data to keep only every other point
     const filteredGamifiedData = gamifiedData.filter((d, i) => i % 2 === 0);
     const filteredNongamifiedData = nongamifiedData.filter((d, i) => i % 2 === 0);
+
 
     chartGroup
       .selectAll("circle.gamified")
@@ -86,6 +98,7 @@ function updateChart(data){
       .attr("r", 4)
       .attr("fill", (d) => colorScale(d.temp));
 
+
     chartGroup
       .selectAll("circle.nongamified")
       .data(filteredNongamifiedData)
@@ -96,8 +109,10 @@ function updateChart(data){
       .attr("r", 4)
       .attr("fill", (d) => colorScale(d.temp));
 
+
     const xAxis = d3.axisBottom(xScale).tickSize(7);
     const yAxis = d3.axisLeft(yScale).tickSize(7);
+
 
     chartGroup
       .append("g")
@@ -107,12 +122,14 @@ function updateChart(data){
       .style("font-family", "'Merriweather'")
       .style("font-size", "15px");
 
+
     chartGroup
       .append("g")
       .call(yAxis)
       .selectAll("text")
       .style("font-family", "'Merriweather'")
       .style("font-size", "15px");
+
 
     chartGroup
       .append("text")
@@ -122,6 +139,7 @@ function updateChart(data){
       .style("font-family", "'Merriweather'")
       .style("font-size", "16px")
       .text("Time (seconds)");
+
 
     chartGroup
       .append("text")
@@ -133,9 +151,10 @@ function updateChart(data){
       .style("font-size", "16px")
       .text("Electrodermal Activity (EDA)");
 
+
     svg
       .append("text")
-      .attr("x", svgWidth / 2)
+      .attr("x", svgWidth / 2.1)
       .attr("y", 30)
       .attr("text-anchor", "middle")
       .style("font-family", "'Merriweather'")
@@ -143,29 +162,34 @@ function updateChart(data){
       .style("font-weight", "bolder")
       .text("Physical Response to Gamified vs. Non-Gamified Cognitive Tasks");
 
+
     const legend = svg.append("g").attr("transform", "translate(685, 90)");
+
 
     legend
       .append("text")
-      .attr("x", -65)
+      .attr("x", -135)
       .attr("y", 45)
       .text("Gamified")
       .style("font-family", "'Merriweather'")
       .style("font-size", "14px");
 
+
     const legend2 = svg.append("g").attr("transform", "translate(685, 115)");
+
 
     legend2
       .append("text")
-      .attr("x", -65)
+      .attr("x", -135)
       .attr("y", 120)
       .text("Non-Gamified")
       .style("font-family", "'Merriweather'")
       .style("font-size", "14px");
-    
+   
     // Add legend
     const legend3 = svg.append("g")
-        .attr("transform", `translate(${width + margin.right + 110}, ${margin.top + 30})`);
+        .attr("transform", `translate(${width + margin.right + 10}, ${margin.top + 30})`);
+
 
         const colors = ["#D73027", "#F1957A", "#deb6ab", "#91C3E6", "#4575B4"];
         colors.forEach((color, i) => {
@@ -191,7 +215,7 @@ function updateChart(data){
         .style("font-family", "'Merriweather'")
         .style("font-size", "14px")
         .text("Low");
-    
+   
     legend3.append("text")
         legend3.append("text")
         .attr("transform", "rotate(90)")
@@ -200,6 +224,7 @@ function updateChart(data){
         .style("font-family", "'Merriweather'")
         .style("font-size", "14px")
         .text("Temperature (°C)");
+
 
     const tooltip = d3
       .select("body")
@@ -212,6 +237,7 @@ function updateChart(data){
       .style("font-size", "12px")
       .style("visibility", "hidden");
 
+
     const verticalLine = chartGroup
       .append("line")
       .attr("stroke", "#5B5B5B")
@@ -221,73 +247,118 @@ function updateChart(data){
       .attr("y2", height)
       .style("visibility", "hidden");
 
-    svg
-      .on("mousemove", (event) => {
-        const [mouseX] = d3.pointer(event);
-        const x0 = xScale.invert(mouseX - margin.left);
-        const closestTime = Math.round(x0);
 
-        const gamifiedPoint = filteredGamifiedData.find(
-          (d) => d.time_elapsed === closestTime
-        );
-        const nongamifiedPoint = filteredNongamifiedData.find(
-          (d) => d.time_elapsed === closestTime
-        );
+      chartGroup
+  .append("rect") // Invisible overlay for mouse detection
+  .attr("width", width)
+  .attr("height", height)
+  .style("fill", "none")
+  .style("pointer-events", "all") // Enables mouse interactions
+  .on("mousemove", (event) => {
+    const [mouseX, mouseY] = d3.pointer(event);
+   
+    // Ensure mouse is within axes
+    if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) {
+      tooltip.style("visibility", "hidden");
+      verticalLine.style("visibility", "hidden");
+      return;
+    }
 
-        chartGroup.selectAll("circle").attr("r", 4);
 
-        if (gamifiedPoint !== undefined && nongamifiedPoint !== undefined) {
-          verticalLine
-            .attr("x1", xScale(closestTime))
-            .attr("x2", xScale(closestTime))
-            .style("visibility", "visible");
+    const x0 = xScale.invert(mouseX);
+    const closestTime = Math.round(x0);
 
-          tooltip
-            .style("visibility", "visible")
-            .html(
-              `Time: ${closestTime} Seconds<br>Gamified EDA: ${gamifiedPoint.eda.toFixed(
-                2
-              )}<br>Gamified Temp: ${gamifiedPoint.temp.toFixed(
-                2
-              )}<br>Non-Gamified EDA: ${nongamifiedPoint.eda.toFixed(
-                2
-              )}<br>Non-Gamified Temp: ${nongamifiedPoint.temp.toFixed(2)}`
-            )
-            .style("top", `${event.pageY - 30}px`)
-            .style("left", `${event.pageX + 10}px`);
 
-          chartGroup
-            .selectAll("circle")
-            .filter((d) => d.time_elapsed === closestTime)
-            .attr("r", 8);
-        } else {
-          verticalLine.style("visibility", "visible");
-          tooltip
-            .style("visibility", "visible")
-            .html(`Time: ${closestTime} Seconds<br>Gamified EDA: ${gamifiedPoint.eda.toFixed(
-                2
-              )}<br>Gamified Temp: ${gamifiedPoint.temp.toFixed(
-                2
-              )}<br>Non-Gamified EDA: ${nongamifiedPoint.eda.toFixed(
-                2
-              )}<br>Non-Gamified Temp: ${nongamifiedPoint.temp.toFixed(2)}`)
-            .style("top", `${event.pageY - 30}px`)
-            .style("left", `${event.pageX + 10}px`);
-        }
-      })
-      .on("mouseout", () => {
-        verticalLine.style("visibility", "hidden");
-        tooltip.style("visibility", "hidden");
-      })
-      .on("mouseover", () => {
-        tooltip.style("visibility", "visible");
-      });
+    const gamifiedPoint = filteredGamifiedData.find(
+      (d) => d.time_elapsed === closestTime
+    );
+    const nongamifiedPoint = filteredNongamifiedData.find(
+      (d) => d.time_elapsed === closestTime
+    );
+
+
+    chartGroup.selectAll("circle").attr("r", 4);
+
+
+    if (gamifiedPoint && nongamifiedPoint) {
+      verticalLine
+        .attr("x1", xScale(closestTime))
+        .attr("x2", xScale(closestTime))
+        .style("visibility", "visible");
+
+
+      tooltip
+        .style("visibility", "visible")
+        .html(
+          `Time: ${closestTime} Seconds<br>Gamified EDA: ${gamifiedPoint.eda.toFixed(
+            2
+          )}<br>Gamified Temp: ${gamifiedPoint.temp.toFixed(
+            2
+          )}<br>Non-Gamified EDA: ${nongamifiedPoint.eda.toFixed(
+            2
+          )}<br>Non-Gamified Temp: ${nongamifiedPoint.temp.toFixed(2)}`
+        )
+        .style("top", `${event.pageY - 30}px`)
+        .style("left", `${event.pageX + 10}px`);
+
+
+      chartGroup
+        .selectAll("circle")
+        .filter((d) => d.time_elapsed === closestTime)
+        .attr("r", 8);
+    }
+  })
+  .on("mouseout", () => {
+    verticalLine.style("visibility", "hidden");
+    tooltip.style("visibility", "hidden");
+  });
+
+
+  svg.on("mouseleave", () => {
+    chartGroup.selectAll("circle").attr("r", 4); // Reset the size of all dots
+  });
 }
+
+
+function updateSmallChart() {
+  const smallWidth = 125; // Adjust as needed
+  const smallHeight = 300;
+  const smallMargin = { top: 90, right: 50, bottom: 50, left: 50 };
+  const innerWidth = smallWidth - smallMargin.left - smallMargin.right;
+  const innerHeight = smallHeight - smallMargin.top - smallMargin.bottom;
+
+
+  const xSmallScale = d3
+        .scaleLinear()
+        .domain([0, 24.5])
+        .range([0, innerWidth]);
+
+
+  const ySmallScale = d3
+        .scaleLinear()
+        .domain([0, 60])
+        .range([innerHeight, 0]);
+
+
+  const smallSvg = d3.select("#bvp-side-chart");
+  smallSvg
+        .append("text")
+        .attr("x", smallWidth / 1.5)
+        .attr("y", smallHeight - 270)
+        .attr("text-anchor", "middle")
+        .style("font-family", "'Merriweather'")
+        .style("font-size", "18px")
+        .style("font-weight", "bolder")
+        .text("BVP for Second ##");
+}
+
 
 async function main() {
     const data = await loadData();
     console.log("Data Loaded: ", data.slice(0, 5));
     updateChart(data);
+    updateSmallChart();
 }
+
 
 main();
