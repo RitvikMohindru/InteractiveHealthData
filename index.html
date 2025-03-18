@@ -28,13 +28,7 @@
       <article>
         <div class="step" data-step="1">
           <p class="hook-text">
-            The human brain is a remarkable machine, capable of processing vast
-            amounts of information in the blink of an eye. Yet, when faced with
-            cognitive challenges, our bodies react in fascinating and often
-            surprising ways.
-            <!-- Heart rates increase, blood flow shifts, and even
-            subtle changes in temperature occur. These physiological responses
-            are the body's way of signaling that the brain is hard at work. -->
+            <span id="typed-text"></span>
           </p>
         </div>
 
@@ -45,24 +39,7 @@
             play in shaping these responses?
           </p>
         </div>
-
         <div class="step" data-step="3">
-          <p id="text">
-            The link between mental effort and physical response becomes
-            particularly interesting when we consider how different tasks—such
-            as surveys—can impact cognitive load and the way our bodies react to
-            mental strain.
-          </p>
-          <p id="text">
-            Surveys are key to data collection, but their design can influence
-            how respondents interact with them. Traditional surveys are more
-            formal, requiring focus and creating a sense of seriousness. But
-            gamified surveys use elements like progress bars, rewards, and
-            storytelling to make the experience engaging and enjoyable.
-          </p>
-        </div>
-
-        <div class="step" data-step="4">
           <p id="img-intro-text">
             First, take a look at the two surveys below:
           </p>
@@ -79,7 +56,7 @@
             />
           </div>
           <p id="img-outro-text">
-            Which one do you think requires more cognitive effort?
+            Which survey would require the least mental effort?
           </p>
         </div>
         <div class="step" data-step="5">
@@ -348,6 +325,27 @@
             varianceLineContainer.style.display = "block";
           }
         });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const text =
+          "The human brain is a remarkable machine, capable of processing vast amounts of information in the blink of an eye. Yet, when faced with cognitive challenges, our bodies react in fascinating and often surprising ways.";
+        const typedTextElement = document.getElementById("typed-text");
+
+        let index = 0;
+        const typingSpeed = 25;
+        const delayBeforeTyping = 4000;
+
+        function typeText() {
+          if (index < text.length) {
+            typedTextElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(typeText, typingSpeed);
+          }
+        }
+
+        // Delay the typing effect by 5 seconds
+        setTimeout(typeText, delayBeforeTyping);
       });
     </script>
 

@@ -5,7 +5,7 @@ let non_gamified_data = [];
 
 async function loadData() {
   gamified_data = await d3.csv(
-    "./data/original_gamified_stats_by_second.csv",
+    "./data/pcp_data/original_gamified_stats_by_second.csv",
     (d) => {
       d.time_elapsed = parseFloat(d.time_elapsed);
       d.bvp = parseFloat(d.bvp);
@@ -16,7 +16,7 @@ async function loadData() {
   );
 
   non_gamified_data = await d3.csv(
-    "./data/original_non_gamified_stats_by_second.csv",
+    "./data/pcp_data/original_non_gamified_stats_by_second.csv",
     (d) => {
       d.time_elapsed = parseFloat(d.time_elapsed);
       d.bvp = parseFloat(d.bvp);
