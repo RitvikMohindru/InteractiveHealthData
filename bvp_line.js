@@ -32,7 +32,7 @@ function updateBvpChart(data) {
   const svg = d3.select("#bvp-line-chart");
   svg.selectAll("*").remove();
 
-  const xScale = d3.scaleLinear().domain([0, 120]).range([0, width]);
+  const xScale = d3.scaleLinear().domain([0, 60]).range([0, width]);
   const yScale = d3
     .scaleLinear()
     .domain([-100, 70]) //.domain([d3.min(data, (d) => d.bvp) - 0.5, d3.max(data, (d) => d.bvp) + 10])
@@ -250,7 +250,7 @@ function updateTempChart(data) {
   const svg = d3.select("#bvp-line-chart");
   svg.selectAll("*").remove();
 
-  const xScale = d3.scaleLinear().domain([0, 120]).range([0, width]);
+  const xScale = d3.scaleLinear().domain([0, 60]).range([0, width]);
   const yScale = d3
     .scaleLinear()
     .domain([30, 35]) //.domain([d3.min(data, (d) => d.bvp) - 0.5, d3.max(data, (d) => d.bvp) + 10])
@@ -462,11 +462,11 @@ async function main() {
       async function handleDropdownChange() {
         const grouping = document.querySelector("#bvp-grouping-select").value;
         if (grouping === "half_second") {
-          file = "./data/bvp_line_data/mean_bvp_by_half_second.csv";
+          file = "./data/bvp_line_data/60_mean_bvp_by_half_second.csv";
         } else if (grouping === "tenth_second") {
-          file = "./data/bvp_line_data/mean_bvp_by_tenth_second.csv";
+          file = "./data/bvp_line_data/60_mean_bvp_by_tenth_second.csv";
         } else if (grouping === "second") {
-          file = "./data/bvp_line_data/mean_bvp_by_second.csv";
+          file = "./data/bvp_line_data/60_mean_bvp_by_second.csv";
         }
         const data = await loadData(file, "bvp");
         updateBvpChart(data);
