@@ -345,21 +345,35 @@ function updateChart(data) {
     chartGroup.selectAll("circle").attr("r", 4); // Reset the size of all dots
   });
 
+  const highlightLine = chartGroup
+      .append("line")
+      .attr("stroke", "orange")
+      .attr("stroke-width", 10)
+      .attr("stroke-opacity", 0.2)
+      .attr("y1", 0)
+      .attr("y2", height)
+      .attr("x1", xScale(1))
+      .attr("x2", xScale(1))
+      .style("visibility", "visible");
 
   document.getElementById("small-slider").step = "1";
     const value = document.querySelector("#chosen-sec");
     const input = document.querySelector("#small-slider");
+    input.step = "2";
     value.textContent = input.value;
     input.addEventListener("input", (event) => {
       const sec = event.target.value;
       value.textContent = sec;
       updateSmallChart(sec);
+      highlightLine
+        .attr("x1", xScale(sec))
+        .attr("x2", xScale(sec))
+        .style("visibility", "visible");
     });
 
 
     updateSmallChart(1);
 }
-
 
 function updateSmallChart(sec) {
   d3.csv(`./data/bvp_real.csv`).then((smallData) => {
@@ -368,13 +382,12 @@ function updateSmallChart(sec) {
       d.bvp = parseFloat(d.bvp);
     });
 
+    sec = Number(sec);
 
     // Filter data to only include points within the given second
-    const filteredData = smallData.filter((d) => d.time >= sec && d.time < sec + 1);
-
+    const filteredData = smallData.filter((d) => d.time >= sec && d.time < sec + 2);
 
     console.log(`Filtered data for sec = ${sec}:`, filteredData); // Debugging log
-
 
     const smallWidth = 500;
     const smallHeight = 300;
@@ -382,37 +395,28 @@ function updateSmallChart(sec) {
     const innerWidth = smallWidth - smallMargin.left - smallMargin.right;
     const innerHeight = smallHeight - smallMargin.top - smallMargin.bottom;
 
-
     if (filteredData.length === 0) {
       console.warn(`No data found for sec = ${sec}`);
       return;
     }
 
-
     const xSmallScale = d3
       .scaleLinear()
-      .domain([sec, sec + 1]) // Reset x-axis domain
+      .domain([sec, sec + 2]) // Reset x-axis domain
       .range([0, innerWidth]);
-
 
     const ySmallScale = d3
       .scaleLinear()
-      .domain([
-        d3.min(filteredData, (d) => d.bvp) - 0.5,
-        d3.max(filteredData, (d) => d.bvp) + 0.5,
-      ])
+      .domain([-150, 100]) // Fixed y-axis domain
       .range([innerHeight, -20]);
-
 
     const lineSmall = d3
       .line()
       .x((d) => xSmallScale(d.time))
       .y((d) => ySmallScale(d.bvp));
 
-
     // Clear previous graph
     d3.select("#bvp-side-chart").select("svg").remove();
-
 
     const smallSvg = d3
       .select("#bvp-side-chart")
@@ -422,65 +426,56 @@ function updateSmallChart(sec) {
       .attr("viewBox", `0 0 ${smallWidth} ${smallHeight}`)
       .attr("preserveAspectRatio", "xMidYMid meet");
 
-
     smallSvg
       .append("text")
       .attr("x", smallWidth / 2)
-      .attr("y", smallMargin.top / 2)
+      .attr("y", smallMargin.top / 2.5)
       .attr("text-anchor", "middle")
       .style("font-family", "'Merriweather'")
       .style("font-size", "18px")
       .style("font-weight", "bolder")
-      .text(`BVP for Second ${sec}`);
-
+      .text(`BVP for Seconds ${sec}-${sec + 2}`);
 
     const smallChartGroup = smallSvg
       .append("g")
       .attr("transform", `translate(${smallMargin.left}, ${smallMargin.top})`);
 
-
     const xAxisSmall = d3.axisBottom(xSmallScale).ticks(5).tickSize(7);
     const yAxisSmall = d3.axisLeft(ySmallScale).ticks(5).tickSize(7);
-
 
     // Remove old axes before adding new ones
     smallChartGroup.select(".x-axis").remove();
     smallChartGroup.select(".y-axis").remove();
 
-
     // Append x-axis
     smallChartGroup
       .append("g")
-      .attr("class", "x-axis") // Add a class for easy removal
+      .attr("class", "x-axis")
       .attr("transform", `translate(0, ${innerHeight})`)
       .call(xAxisSmall)
       .selectAll("text")
       .style("font-family", "'Merriweather'");
 
-
     // Append y-axis
     smallChartGroup
       .append("g")
-      .attr("class", "y-axis") // Add a class for easy removal
+      .attr("class", "y-axis")
       .call(yAxisSmall)
       .selectAll("text")
       .style("font-family", "'Merriweather'");
 
-
     // Filter gamified and non-gamified data
     const gamifiedSmallData = filteredData.filter((d) => d.gamified_or_no === "gamified");
     const nongamifiedSmallData = filteredData.filter((d) => d.gamified_or_no === "non_gamified");
-
 
     // Append gamified line
     smallChartGroup
       .append("path")
       .datum(gamifiedSmallData)
       .attr("fill", "none")
-      .attr("stroke", "#FF7F7F")
+      .attr("stroke", "#FFA500")
       .attr("stroke-width", 2)
       .attr("d", lineSmall);
-
 
     // Append non-gamified line
     smallChartGroup
@@ -491,6 +486,29 @@ function updateSmallChart(sec) {
       .attr("stroke-width", 2)
       .attr("d", lineSmall);
 
+    // Add dots for gamified points
+    smallChartGroup
+      .selectAll(".dot-gamified")
+      .data(gamifiedSmallData)
+      .enter()
+      .append("circle")
+      .attr("class", "dot-gamified")
+      .attr("cx", (d) => xSmallScale(d.time))
+      .attr("cy", (d) => ySmallScale(d.bvp))
+      .attr("r", 3)
+      .style("fill", "#FFA500");
+
+    // Add dots for non-gamified points
+    smallChartGroup
+      .selectAll(".dot-nongamified")
+      .data(nongamifiedSmallData)
+      .enter()
+      .append("circle")
+      .attr("class", "dot-nongamified")
+      .attr("cx", (d) => xSmallScale(d.time))
+      .attr("cy", (d) => ySmallScale(d.bvp))
+      .attr("r", 3)
+      .style("fill", "#808080");
 
     // Axis labels
     smallChartGroup
@@ -502,7 +520,6 @@ function updateSmallChart(sec) {
       .style("font-size", "14px")
       .text("Time (seconds)");
 
-
     smallChartGroup
       .append("text")
       .attr("transform", "rotate(-90)")
@@ -512,6 +529,44 @@ function updateSmallChart(sec) {
       .style("font-family", "'Merriweather'")
       .style("font-size", "14px")
       .text("Blood Volume Pulse");
+
+    // Legend
+    const legend = smallSvg.append("g").attr("transform", `translate(${smallWidth - 100}, 40)`);
+
+    // Legend Title
+    legend
+      .append("text")
+      .attr("x", 0)
+      .attr("y", -10)
+      .attr("text-anchor", "start")
+      .style("font-family", "'Merriweather'")
+      .style("font-size", "14px")
+      .style("font-weight", "bold")
+      .text("Type of Task");
+
+    // Gamified legend item
+    legend.append("circle").attr("cx", 5).attr("cy", 10).attr("r", 6).style("fill", "#FFA500");
+
+    legend
+      .append("text")
+      .attr("x", 20)
+      .attr("y", 14)
+      .attr("text-anchor", "start")
+      .style("font-family", "'Merriweather'")
+      .style("font-size", "12px")
+      .text("Gamified");
+
+    // Non-Gamified legend item
+    legend.append("circle").attr("cx", 5).attr("cy", 30).attr("r", 6).style("fill", "#808080");
+
+    legend
+      .append("text")
+      .attr("x", 20)
+      .attr("y", 34)
+      .attr("text-anchor", "start")
+      .style("font-family", "'Merriweather'")
+      .style("font-size", "12px")
+      .text("Non-Gamified");
   }).catch((error) => console.error(`Error loading CSV:`, error));
 }
 
