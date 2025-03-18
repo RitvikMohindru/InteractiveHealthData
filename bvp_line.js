@@ -1,6 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm";
 
-
 async function loadData(file, kind) {
   let data = [];
   if (kind === "bvp") {
@@ -19,24 +18,19 @@ async function loadData(file, kind) {
   return data;
 }
 
-
 function updateBvpChart(data) {
   const svgWidth = 800;
   const svgHeight = 400;
   const margin = { top: 50, right: 50, bottom: 75, left: 100 };
 
-
   const width = svgWidth - margin.left - margin.right;
   const height = svgHeight - margin.top - margin.bottom;
-
 
   const baselineData = data.filter((d) => d.baseline_cog === "baseline");
   const cogData = data.filter((d) => d.baseline_cog === "cog");
 
-
   const svg = d3.select("#bvp-line-chart");
   svg.selectAll("*").remove();
-
 
   const xScale = d3.scaleLinear().domain([0, 120]).range([0, width]);
   const yScale = d3
@@ -44,13 +38,11 @@ function updateBvpChart(data) {
     .domain([-100, 70]) //.domain([d3.min(data, (d) => d.bvp) - 0.5, d3.max(data, (d) => d.bvp) + 10])
     .range([300, 0]);
 
-
   const lineBaseline = d3
     .line()
     .defined((d) => !isNaN(d.bvp))
     .x((d) => xScale(d.time_elapsed))
     .y((d) => yScale(d.bvp));
-
 
   const lineCog = d3
     .line()
@@ -58,11 +50,9 @@ function updateBvpChart(data) {
     .x((d) => xScale(d.time_elapsed))
     .y((d) => yScale(d.bvp));
 
-
   const chartGroup = svg
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
 
   const cogPath = chartGroup
     .append("path")
@@ -72,7 +62,6 @@ function updateBvpChart(data) {
     .attr("stroke", "#FFA500")
     .attr("stroke-width", 3);
 
-
   const baselinePath = chartGroup
     .append("path")
     .datum(baselineData)
@@ -81,10 +70,8 @@ function updateBvpChart(data) {
     .attr("stroke", "#808080")
     .attr("stroke-width", 3);
 
-
   const xAxis = d3.axisBottom(xScale).tickSize(7);
   const yAxis = d3.axisLeft(yScale).tickSize(7);
-
 
   chartGroup
     .append("g")
@@ -94,14 +81,12 @@ function updateBvpChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "15px");
 
-
   chartGroup
     .append("g")
     .call(yAxis)
     .selectAll("text")
     .style("font-family", "'Merriweather'")
     .style("font-size", "15px");
-
 
   chartGroup
     .append("text")
@@ -111,7 +96,6 @@ function updateBvpChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "16px")
     .text("Time Elapsed (seconds)");
-
 
   chartGroup
     .append("text")
@@ -123,7 +107,6 @@ function updateBvpChart(data) {
     .style("font-size", "16px")
     .text("Average Blood Volume Pulse");
 
-
   svg
     .append("text")
     .attr("x", svgWidth / 1.9)
@@ -134,9 +117,7 @@ function updateBvpChart(data) {
     .style("font-weight", "bolder")
     .text("How Does Cognitive Load Affect Blood Volume Pulse?");
 
-
   const legend = svg.append("g").attr("transform", "translate(800, 90)");
-
 
   const cogCircle = legend
     .append("circle")
@@ -151,7 +132,6 @@ function updateBvpChart(data) {
       baselineCircle.attr("r", 6);
     });
 
-
   legend
     .append("text")
     .attr("x", -10)
@@ -160,9 +140,7 @@ function updateBvpChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "13px");
 
-
   const legend2 = svg.append("g").attr("transform", "translate(800, 115)");
-
 
   const baselineCircle = legend2
     .append("circle")
@@ -177,7 +155,6 @@ function updateBvpChart(data) {
       cogCircle.attr("r", 6);
     });
 
-
   legend2
     .append("text")
     .attr("x", -10)
@@ -186,9 +163,7 @@ function updateBvpChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "13px");
 
-
   const legendTitle = svg.append("g").attr("transform", "translate(800, 105)");
-
 
   legendTitle
     .append("text")
@@ -198,7 +173,6 @@ function updateBvpChart(data) {
     .style("font-weight", "bold")
     .style("font-family", "'Merriweather'")
     .style("font-size", "15px");
-
 
   // Tooltip and vertical line
   const tooltip = d3
@@ -213,7 +187,6 @@ function updateBvpChart(data) {
     .style("border-radius", "5px")
     .style("padding", "10px");
 
-
   const verticalLine = chartGroup
     .append("line")
     .attr("class", "vertical-line")
@@ -223,7 +196,6 @@ function updateBvpChart(data) {
     .attr("stroke-width", 1)
     .attr("stroke-dasharray", "4")
     .style("visibility", "hidden");
-
 
   chartGroup
     .append("rect")
@@ -238,19 +210,15 @@ function updateBvpChart(data) {
       const closestBaselineIndex = i(baselineData, x0);
       const closestCogIndex = i(cogData, x0);
 
-
       const closestBaseline = baselineData[closestBaselineIndex];
       const closestCog = cogData[closestCogIndex];
 
-
       const closestTime = closestBaseline.time_elapsed;
-
 
       verticalLine
         .attr("x1", xScale(closestTime))
         .attr("x2", xScale(closestTime))
         .style("visibility", "visible");
-
 
       tooltip
         .html(
@@ -268,24 +236,19 @@ function updateBvpChart(data) {
     });
 }
 
-
 function updateTempChart(data) {
   const svgWidth = 800;
   const svgHeight = 400;
   const margin = { top: 50, right: 50, bottom: 75, left: 100 };
 
-
   const width = svgWidth - margin.left - margin.right;
   const height = svgHeight - margin.top - margin.bottom;
-
 
   const baselineData = data.filter((d) => d.baseline_cog === "baseline");
   const cogData = data.filter((d) => d.baseline_cog === "cog");
 
-
   const svg = d3.select("#bvp-line-chart");
   svg.selectAll("*").remove();
-
 
   const xScale = d3.scaleLinear().domain([0, 120]).range([0, width]);
   const yScale = d3
@@ -293,13 +256,11 @@ function updateTempChart(data) {
     .domain([30, 35]) //.domain([d3.min(data, (d) => d.bvp) - 0.5, d3.max(data, (d) => d.bvp) + 10])
     .range([300, 0]);
 
-
   const lineBaseline = d3
     .line()
     .defined((d) => !isNaN(d.bvp))
     .x((d) => xScale(d.time_elapsed))
     .y((d) => yScale(d.temp));
-
 
   const lineCog = d3
     .line()
@@ -307,11 +268,9 @@ function updateTempChart(data) {
     .x((d) => xScale(d.time_elapsed))
     .y((d) => yScale(d.temp));
 
-
   const chartGroup = svg
     .append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
 
   const cogPath = chartGroup
     .append("path")
@@ -321,7 +280,6 @@ function updateTempChart(data) {
     .attr("stroke", "#FFA500")
     .attr("stroke-width", 3);
 
-
   const baselinePath = chartGroup
     .append("path")
     .datum(baselineData)
@@ -330,10 +288,8 @@ function updateTempChart(data) {
     .attr("stroke", "#808080")
     .attr("stroke-width", 3);
 
-
   const xAxis = d3.axisBottom(xScale).tickSize(7);
   const yAxis = d3.axisLeft(yScale).tickSize(7);
-
 
   chartGroup
     .append("g")
@@ -343,14 +299,12 @@ function updateTempChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "15px");
 
-
   chartGroup
     .append("g")
     .call(yAxis)
     .selectAll("text")
     .style("font-family", "'Merriweather'")
     .style("font-size", "15px");
-
 
   chartGroup
     .append("text")
@@ -360,7 +314,6 @@ function updateTempChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "16px")
     .text("Time Elapsed (seconds)");
-
 
   chartGroup
     .append("text")
@@ -372,7 +325,6 @@ function updateTempChart(data) {
     .style("font-size", "16px")
     .text("Average Temperature (°C)");
 
-
   svg
     .append("text")
     .attr("x", svgWidth / 1.9)
@@ -383,9 +335,7 @@ function updateTempChart(data) {
     .style("font-weight", "bolder")
     .text("How Does Cognitive Load Affect Temperature?");
 
-
   const legend = svg.append("g").attr("transform", "translate(800, 90)");
-
 
   const cogCircle = legend
     .append("circle")
@@ -393,7 +343,6 @@ function updateTempChart(data) {
     .attr("cy", 36)
     .attr("r", 6)
     .attr("fill", "#FFA500");
-
 
   legend
     .append("text")
@@ -403,9 +352,7 @@ function updateTempChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "13px");
 
-
   const legend2 = svg.append("g").attr("transform", "translate(800, 115)");
-
 
   const baselineCircle = legend2
     .append("circle")
@@ -415,7 +362,6 @@ function updateTempChart(data) {
     .attr("fill", "#808080")
     .style("cursor", "pointer");
 
-
   legend2
     .append("text")
     .attr("x", -10)
@@ -424,9 +370,7 @@ function updateTempChart(data) {
     .style("font-family", "'Merriweather'")
     .style("font-size", "13px");
 
-
   const legendTitle = svg.append("g").attr("transform", "translate(800, 105)");
-
 
   legendTitle
     .append("text")
@@ -436,7 +380,6 @@ function updateTempChart(data) {
     .style("font-weight", "bold")
     .style("font-family", "'Merriweather'")
     .style("font-size", "15px");
-
 
   // Tooltip and vertical line
   const tooltip = d3
@@ -451,7 +394,6 @@ function updateTempChart(data) {
     .style("border-radius", "5px")
     .style("padding", "10px");
 
-
   const verticalLine = chartGroup
     .append("line")
     .attr("class", "vertical-line")
@@ -461,7 +403,6 @@ function updateTempChart(data) {
     .attr("stroke-width", 1)
     .attr("stroke-dasharray", "4")
     .style("visibility", "hidden");
-
 
   chartGroup
     .append("rect")
@@ -476,19 +417,15 @@ function updateTempChart(data) {
       const closestBaselineIndex = i(baselineData, x0);
       const closestCogIndex = i(cogData, x0);
 
-
       const closestBaseline = baselineData[closestBaselineIndex];
       const closestCog = cogData[closestCogIndex];
 
-
       const closestTime = closestBaseline.time_elapsed;
-
 
       verticalLine
         .attr("x1", xScale(closestTime))
         .attr("x2", xScale(closestTime))
         .style("visibility", "visible");
-
 
       tooltip
         .html(
@@ -506,12 +443,10 @@ function updateTempChart(data) {
     });
 }
 
-
 async function main() {
   const graphDropdown = document.querySelector("#choose-graph select");
   const bvpGroupingLabel = document.querySelector("#bvp-grouping");
   let file;
-
 
   async function dropdownChanger() {
     const selectedGraph = graphDropdown.value;
@@ -523,7 +458,6 @@ async function main() {
           <option value="half_second" selected>Half Seconds</option>
           <option value="second">Seconds</option>
         </select>`;
-
 
       async function handleDropdownChange() {
         const grouping = document.querySelector("#bvp-grouping-select").value;
@@ -538,11 +472,9 @@ async function main() {
         updateBvpChart(data);
       }
 
-
       document
         .querySelector("#bvp-grouping-select")
         .addEventListener("change", handleDropdownChange);
-
 
       // Initial chart rendering
       await handleDropdownChange();
@@ -554,7 +486,6 @@ async function main() {
         updateTempChart(data);
       }
 
-
       // Initial chart rendering
       await handleDropdownChange();
     }
@@ -562,6 +493,5 @@ async function main() {
   graphDropdown.addEventListener("change", dropdownChanger);
   await dropdownChanger(); // Initial chart rendering
 }
-
 
 document.addEventListener("DOMContentLoaded", main);
